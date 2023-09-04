@@ -8,10 +8,9 @@ function InputForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://your-django-backend-url/url_input/",
-        { url }
-      );
+      const response = await axios.post("http://127.0.0.1:8000//url_input/", {
+        url,
+      });
       setResponse(`Entered URL: ${response.data.url}`);
     } catch (error) {
       console.error(error);
