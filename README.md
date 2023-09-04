@@ -19,3 +19,8 @@ step 4: Give that input to an LLM fine-tuned on that specific ebook, and fetch t
 step 5: Convert text output to speech, and respond.
 
 step 6: Inform the listener that you will continue reading, and then resume the audio.
+
+# Resources
+
+Overview of TTS vs STT by Murf AI:
+https://murf.ai/resources/text-to-speech-vs-speech-to-text/#:~:text=As%20is%20evident%2C%20there%20is,for%20its%20speech%20recognition%20module.
