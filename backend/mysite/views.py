@@ -1,13 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-def url_input(request):
-    if request.method == 'POST':
-        # Get the URL from the POST request
-        url = request.POST.get('url', '')
-
-        # You can process the URL or display it as is
-        return HttpResponse(f'Entered URL: {url}')
-    else:
-        # If it's a GET request, render a form to input the URL
-        return render(request, 'url_input_form.html')
+class TextSearchView(APIView):
+    def post(self, request):
+        # url = ''
+        if request.method == 'POST':
+            url = request.data.get('url', '')
+            
+        return Response({'url': url}, status=200)
