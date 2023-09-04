@@ -8,7 +8,7 @@ function InputForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000//url_input/", {
+      const response = await axios.post("http://127.0.0.1:8000/search-view/", {
         url,
       });
       setResponse(`Entered URL: ${response.data.url}`);
