@@ -6,9 +6,12 @@ import trafilatura
 from trafilatura.settings import use_config
 import torch
 from TTS.api import TTS
+from uuid import uuid4
+from .models import TextLibrary
 
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 model_name = TTS().list_models()[0]
@@ -23,14 +26,14 @@ class TextSearchView(APIView):
             main_content = trafilatura.fetch_url(url)
             extracted_text = trafilatura.extract(
                 main_content, output_format="text", config=newconfig)
-            text_to_audio(extracted_text[:1024])
+            audio_url = text_to_audio(extracted_text[:1024], url)
 
-            return Response({'url': url, 'main_content': extracted_text}, status=200)
+            return Response({'audio_url': audio_url}, status=200)
+        
+    def get(self, request): 
 
 
-def text_to_audio(content):
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
 def text_to_audio(content, url):
     # wav = tts.tts(content, speaker=tts.speakers[0], language=tts.languages[0])
     if not TextLibrary.objects.filter(website_url=url).exists():
@@ -42,4 +45,6 @@ def text_to_audio(content, url):
         tts.tts_to_file(
             text=content, speaker=tts.speakers[0], language=tts.languages[0], file_path=file_path)
 
-    return wav
+    return "uploads/" + TextLibrary.objects.get(website_url=url).audio_id + ".wav"
+
+
