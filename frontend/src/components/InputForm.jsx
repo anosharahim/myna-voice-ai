@@ -11,7 +11,7 @@ function InputForm() {
       const response = await axios.post("http://127.0.0.1:8000/search-view/", {
         url,
       });
-      setResponse(`Entered URL: ${response.data.url}`);
+      setResponse(response.data.audio_url);
     } catch (error) {
       console.error(error);
       setResponse("Error occurred while sending the URL.");
@@ -31,7 +31,7 @@ function InputForm() {
         </label>
         <button type="submit">Submit</button>
       </form>
-      <p>{response}</p>
+      {response ? <audio src={response}></audio> : <div> no file yet </div>}
     </div>
   );
 }
