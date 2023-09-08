@@ -19,7 +19,7 @@ class TextSearchView(APIView):
             main_content = trafilatura.fetch_url(url)
             extracted_text = trafilatura.extract(
                 main_content, output_format="text", config=newconfig)
-            wav_file = text_to_audio(extracted_text[:1024])
+            text_to_audio(extracted_text[:1024])
 
             return Response({'url': url, 'main_content': extracted_text}, status=200)
 
@@ -31,12 +31,11 @@ def text_to_audio(content):
     model_name = TTS().list_models()[0]
     tts = TTS(model_name).to(device)
 
-    # this gives numpy output
+    # this gives list output
     wav = tts.tts(content, speaker=tts.speakers[0], language=tts.languages[0])
     print("wav done", len(wav))
-    # print(wav)
 
-    # this gives a .wav audio file
+    # get audio file
     # audio_file = tts.tts_to_file(text="Hello world!", speaker=tts.speakers[0], language=tts.languages[0], file_path="output.wav")
 
     return wav
