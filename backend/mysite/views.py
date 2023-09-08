@@ -9,6 +9,10 @@ from TTS.api import TTS
 
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+model_name = TTS().list_models()[0]
+tts = TTS(model_name).to(device)
 
 
 class TextSearchView(APIView):
