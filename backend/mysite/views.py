@@ -12,11 +12,6 @@ from .models import TextLibrary
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-
-model_name = TTS().list_models()[0]
-tts = TTS(model_name).to(device)
-
 
 class TextSearchView(APIView):
     def post(self, request):
@@ -29,14 +24,19 @@ class TextSearchView(APIView):
             audio_url = text_to_audio(extracted_text[:1024], url)
 
             return Response({'audio_url': audio_url}, status=200)
-        
-    def get(self, request): 
 
+    # def get(self, request):
 
 
 def text_to_audio(content, url):
     # wav = tts.tts(content, speaker=tts.speakers[0], language=tts.languages[0])
     if not TextLibrary.objects.filter(website_url=url).exists():
+
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+
+        model_name = TTS().list_models()[0]
+        tts = TTS(model_name).to(device)
+
         # get audio file
         file_id = uuid4()
         TextLibrary.objects.create(title='', website_url=url, audio_id=file_id)
@@ -46,5 +46,3 @@ def text_to_audio(content, url):
             text=content, speaker=tts.speakers[0], language=tts.languages[0], file_path=file_path)
 
     return "uploads/" + TextLibrary.objects.get(website_url=url).audio_id + ".wav"
-
-
