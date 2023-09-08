@@ -1,2 +1,4 @@
-backend/mysite/__pycache__
 frontend/node_modules
+*.sqlite3
+backend/uploads/
+__pycache__
