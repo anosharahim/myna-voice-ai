@@ -4,6 +4,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import trafilatura
 from trafilatura.settings import use_config
+import torch
+from TTS.api import TTS
+
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
 
@@ -16,3 +19,19 @@ class TextSearchView(APIView):
             extracted_text = trafilatura.extract(main_content, output_format="text", config=newconfig)
     
             return Response({'url': url, 'main_content': extracted_text}, status=200)
+        
+    
+def text_to_audio(self, content): 
+
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+
+    model_name = TTS().list_models()[0]
+    tts = TTS(model_name).to(device)
+
+    #this gives numpy output
+    wav = tts.tts(content, speaker=tts.speakers[0], language=tts.languages[0])
+
+    #this gives a .wav audio file
+    # audio_file = tts.tts_to_file(text="Hello world!", speaker=tts.speakers[0], language=tts.languages[0], file_path="output.wav")
+
+    return wav
