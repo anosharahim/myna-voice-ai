@@ -31,15 +31,15 @@ class TextSearchView(APIView):
 def text_to_audio(content):
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
+def text_to_audio(content, url):
+    # wav = tts.tts(content, speaker=tts.speakers[0], language=tts.languages[0])
+    if not TextLibrary.objects.filter(website_url=url).exists():
+        # get audio file
+        file_id = uuid4()
+        TextLibrary.objects.create(title='', website_url=url, audio_id=file_id)
 
-    model_name = TTS().list_models()[0]
-    tts = TTS(model_name).to(device)
-
-    # this gives list output
-    wav = tts.tts(content, speaker=tts.speakers[0], language=tts.languages[0])
-    print("wav done", len(wav))
-
-    # get audio file
-    # audio_file = tts.tts_to_file(text="Hello world!", speaker=tts.speakers[0], language=tts.languages[0], file_path="output.wav")
+        file_path = f"/Users/anosharahim/storyteller-ai/backend/uploads/{file_id}.wav"
+        tts.tts_to_file(
+            text=content, speaker=tts.speakers[0], language=tts.languages[0], file_path=file_path)
 
     return wav
