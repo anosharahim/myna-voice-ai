@@ -1,0 +1,6 @@
+django
+trafilatura
+djangorestframework
+torch
+TTS
+django-cors-headers
