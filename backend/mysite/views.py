@@ -45,4 +45,4 @@ def text_to_audio(content, url):
         tts.tts_to_file(
             text=content, speaker=tts.speakers[0], language=tts.languages[0], file_path=file_path)
 
-    return "uploads/" + TextLibrary.objects.get(website_url=url).audio_id + ".wav"
+    return "static/" + TextLibrary.objects.get(website_url=url).audio_id + ".wav"
