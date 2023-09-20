@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import trafilatura
@@ -7,7 +6,11 @@ from trafilatura.settings import use_config
 import torch
 from TTS.api import TTS
 from uuid import uuid4
-from .models import TextLibrary
+from .models import TextLibrary, UserAccount
+from django.contrib.auth.forms import UserCreationForm
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
@@ -24,8 +27,6 @@ class TextSearchView(APIView):
             audio_url = text_to_audio(extracted_text[:1024], url)
 
             return Response({'audio_url': audio_url}, status=200)
-
-    # def get(self, request):
 
 
 def text_to_audio(content, url):
@@ -46,3 +47,21 @@ def text_to_audio(content, url):
             text=content, speaker=tts.speakers[0], language=tts.languages[0], file_path=file_path)
 
     return "static/" + TextLibrary.objects.get(website_url=url).audio_id + ".wav"
+
+
+# user registration
+@csrf_exempt
+def register(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('name')
+        password = data.get('password')
+
+        if not UserAccount.objects.filter(username=username).exists():
+            # user = UserAccount(username=username, password=password)
+            UserAccount.objects.create(username=username, password=password)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False})
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
