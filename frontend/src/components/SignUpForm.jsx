@@ -20,7 +20,20 @@ export default function SignUpForm() {
   };
 
   // Handling the form submission
-  const handleSubmit = async (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/register/", {
+        name,
+        password,
+      });
+      setResponse(`http://127.0.0.1:8000/${response.data}`);
+      setSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      setResponse("Error occurred while creating your account.");
+    }
+  };
 
   return (
     <div className="form">
