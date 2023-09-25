@@ -15,13 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from .views import TextSearchView, register
+from django.urls import path, include
+from .views import TextSearchView, sign_up, login_handler, check_is_authenticated
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('search-view/', TextSearchView.as_view(), name='search-view'),
-    path('register/', register, name='register'),
+    path('sign-up/', sign_up, name='sign-up'),
+    path("login/", login_handler, name="login"),
+    path('check-is-authenticated/', check_is_authenticated,
+         name='check-is-authenticated'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
