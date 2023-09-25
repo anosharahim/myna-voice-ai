@@ -16,6 +16,9 @@ function App() {
   const handleAuthentication = () => {
     setIsAuthenticated(true);
   };
+  const handleLogOut = () => {
+    setIsAuthenticated(false);
+  };
 
   useEffect(() => {
     fetch("/check-is-authenticated/", {
@@ -38,7 +41,7 @@ function App() {
     <div className="App">
       <div className="App">
         {isAuthenticated ? (
-          <InputForm />
+          <InputForm onLogOut={handleLogOut} />
         ) : isSignUp ? (
           <SignUpForm onAuthentication={handleAuthentication} />
         ) : (

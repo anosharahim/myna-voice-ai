@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import TextSearchView, sign_up, login_handler, check_is_authenticated
+from .views import TextSearchView, sign_up, login_handler, check_is_authenticated, logout_handler
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,6 +25,7 @@ urlpatterns = [
     path('search-view/', TextSearchView.as_view(), name='search-view'),
     path('sign-up/', sign_up, name='sign-up'),
     path("login/", login_handler, name="login"),
+    path("logout/", logout_handler, name="logout"),
     path('check-is-authenticated/', check_is_authenticated,
          name='check-is-authenticated'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

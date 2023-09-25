@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function InputForm() {
+function InputForm(onLogOut) {
   const [url, setUrl] = useState("");
   const [response, setResponse] = useState("");
 
@@ -18,6 +18,17 @@ function InputForm() {
     }
   };
 
+  const handleLogOut = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get("logout/");
+      // TODO check response status
+      onLogOut();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -31,6 +42,7 @@ function InputForm() {
         </label>
         <button type="submit">Submit</button>
       </form>
+      <button onClick={handleLogOut}> Logout</button>
       {response ? (
         <audio autoPlay controls src={response}></audio>
       ) : (

@@ -9,7 +9,7 @@ from uuid import uuid4
 from .models import TextLibrary
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -99,3 +99,8 @@ def login_handler(request):
             return JsonResponse({'success': False}, status=403)
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+def logout_handler(request):
+    logout(request)  # logout is predefined
+    return JsonResponse({'success': True}, status=200)
