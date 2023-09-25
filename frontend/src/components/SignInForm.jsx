@@ -1,37 +1,37 @@
 import { useState } from "react";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
-export default function SignUpForm() {
+export default function SignUpForm({ onAuthentication }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [response, setResponse] = useState("");
 
   // Handling the name change
   const handleName = (e) => {
     setName(e.target.value);
-    setSubmitted(false);
   };
 
   // Handling the password change
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    setSubmitted(false);
   };
 
   // Handling the form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/login/", {
-        name,
-        password,
-      });
-      setResponse(`http://127.0.0.1:8000/${response.data}`);
-      setSubmitted(true);
+      const response = await axios.post(
+        "/login/",
+        {
+          name,
+          password,
+        },
+        { withCredentials: true }
+      );
+      // TODO check response status
+      onAuthentication();
     } catch (error) {
       console.error(error);
-      setResponse("Error occurred while logging in.");
     }
   };
   return (

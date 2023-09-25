@@ -1,22 +1,38 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import InputForm from "./components/InputForm";
 import SignUpForm from "./components/SignUpForm";
 import SignInForm from "./components/SignInForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
 
-  const handleAccountCreation = () => {
+  const handleGoToSignUp = () => {
     // go to sign-up page
     setIsSignUp(true);
   };
-  // Function to handle successful sign-in or sign-up
   const handleAuthentication = () => {
     setIsAuthenticated(true);
   };
+
+  useEffect(() => {
+    fetch("/check-is-authenticated/", {
+      method: "GET",
+      credentials: "include", // This here
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
 
   return (
     <div className="App">
@@ -28,11 +44,7 @@ function App() {
         ) : (
           <>
             <SignInForm onAuthentication={handleAuthentication} />
-            <button
-              onClick={handleAccountCreation}
-              className="btn"
-              type="submit"
-            >
+            <button onClick={handleGoToSignUp} className="btn" type="submit">
               {" "}
               Create Account
             </button>
