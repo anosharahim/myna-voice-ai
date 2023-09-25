@@ -6,7 +6,8 @@ from trafilatura.settings import use_config
 import torch
 from TTS.api import TTS
 from uuid import uuid4
-from .models import TextLibrary, UserAccount
+from .models import TextLibrary
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -57,9 +58,8 @@ def register(request):
         username = data.get('name')
         password = data.get('password')
 
-        if not UserAccount.objects.filter(username=username).exists():
-            # user = UserAccount(username=username, password=password)
-            UserAccount.objects.create(username=username, password=password)
+        if not User.objects.filter(username=username).exists():
+            User.objects.create_user(username=username, password=password)
             return JsonResponse({'success': True})
         else:
             return JsonResponse({'success': False})
