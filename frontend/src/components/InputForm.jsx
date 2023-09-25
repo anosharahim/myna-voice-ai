@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function InputForm(onLogOut) {
+function InputForm({ onLogOut }) {
   const [url, setUrl] = useState("");
   const [response, setResponse] = useState("");
 

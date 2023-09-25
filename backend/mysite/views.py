@@ -95,12 +95,11 @@ def login_handler(request):
             login(request, user)
             return JsonResponse({'success': True}, status=200)
         else:
-            # Authentication failed
             return JsonResponse({'success': False}, status=403)
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
 def logout_handler(request):
-    logout(request)  # logout is predefined
-    return JsonResponse({'success': True}, status=200)
+    logout(request)
+    return JsonResponse({'sucghgcess': True}, status=200)

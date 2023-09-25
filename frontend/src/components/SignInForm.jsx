@@ -21,7 +21,7 @@ export default function SignUpForm({ onAuthentication }) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "/login/",
+        "login/",
         {
           name,
           password,
