@@ -65,3 +65,9 @@ def register(request):
             return JsonResponse({'success': False})
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+def check_is_authenticated(request):
+    if request.user and request.user.id:
+        return JsonResponse({"the message": "success"}, status=200)
+    else:
+        return JsonResponse({"error": "not logged in"}, status=403)
+
