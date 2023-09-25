@@ -9,6 +9,7 @@ from uuid import uuid4
 from .models import TextLibrary
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -51,8 +52,7 @@ def text_to_audio(content, url):
 
 
 # user registration
-@csrf_exempt
-def register(request):
+def sign_up(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data.get('name')
@@ -65,11 +65,14 @@ def register(request):
             return JsonResponse({'success': False})
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
 def check_is_authenticated(request):
     if request.user and request.user.id:
         return JsonResponse({"the message": "success"}, status=200)
     else:
         return JsonResponse({"error": "not logged in"}, status=403)
+
 
 class DisableCSRFMiddleware(object):
 
@@ -80,3 +83,19 @@ class DisableCSRFMiddleware(object):
         setattr(request, '_dont_enforce_csrf_checks', True)
         response = self.get_response(request)
         return response
+
+
+def login_handler(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('name')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'success': True}, status=200)
+        else:
+            # Authentication failed
+            return JsonResponse({'success': False}, status=403)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
