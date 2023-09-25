@@ -18,9 +18,11 @@ function App() {
   };
   const handleLogOut = () => {
     setIsAuthenticated(false);
+    checkAuthentication();
+    window.location.reload(false);
   };
 
-  useEffect(() => {
+  const checkAuthentication = () => {
     fetch("/check-is-authenticated/", {
       method: "GET",
       credentials: "include", // This here
@@ -35,6 +37,9 @@ function App() {
       .catch((error) => {
         console.error("Error:", error);
       });
+  };
+  useEffect(() => {
+    checkAuthentication(); // Check authentication status on component mount
   }, []);
 
   return (
