@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TextLibrary, UserAccount
+from .models import TextLibrary
 
 
 class TextAdmin(admin.ModelAdmin):
@@ -12,4 +12,3 @@ class UserAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(TextLibrary, TextAdmin)
-admin.site.register(UserAccount, UserAdmin)
