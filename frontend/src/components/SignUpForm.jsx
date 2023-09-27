@@ -23,11 +23,11 @@ export default function SignUpForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/register/", {
+      const response = await axios.post("/register/", {
         name,
         password,
       });
-      setResponse(`http://127.0.0.1:8000/${response.data}`);
+      setResponse(`/${response.data}`);
       setSubmitted(true);
     } catch (error) {
       console.error(error);

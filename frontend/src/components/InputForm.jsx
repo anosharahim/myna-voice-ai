@@ -8,10 +8,10 @@ function InputForm({ onLogOut }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/search-view/", {
+      const response = await axios.post("/search-view/", {
         url,
       });
-      setResponse(`http://127.0.0.1:8000/${response.data.audio_url}`);
+      setResponse(`/${response.data.audio_url}`);
     } catch (error) {
       console.error(error);
       setResponse("Error occurred while sending the URL.");
