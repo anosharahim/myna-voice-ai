@@ -13,6 +13,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+import speech_recognition as sr
 
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
@@ -44,6 +45,7 @@ class TextSearchView(APIView):
 
 
 def text_to_audio(request, content, url):
+    '''Converts extracted content into an audio file, and saves it to user's text library.'''
     # wav = tts.tts(content, speaker=tts.speakers[0], language=tts.languages[0])
     user = request.user
     if not request.user.id:
@@ -65,6 +67,20 @@ def text_to_audio(request, content, url):
             text=content, speaker=tts.speakers[0], language=tts.languages[0], file_path=file_path)
 
     return "static/" + TextLibrary.objects.get(website_url=url).audio_id + ".wav"
+
+
+def audio_listener():
+    '''Listens and records user's audio, and returns it as a str.'''
+    r = sr.Recognizer()
+    with sr.Microphone as source:
+        audio = r.listen(source)
+        said = ""
+        try:
+            said = r.recognize_google(audio)
+            print(said)
+        except Exception as e:
+            print("Exception"+str(e))
+    return said
 
 
 # User SIGNUP/LOGIN/LOGOUT Views

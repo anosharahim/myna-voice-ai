@@ -4,3 +4,4 @@ djangorestframework
 torch
 TTS
 django-cors-headers
+SpeechRecognition
