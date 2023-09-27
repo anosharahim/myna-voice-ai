@@ -17,6 +17,18 @@ import json
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
 
+# Security
+
+
+class DisableCSRFMiddleware(object):
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        setattr(request, '_dont_enforce_csrf_checks', True)
+        response = self.get_response(request)
+        return response
+
 
 class TextSearchView(APIView):
     def post(self, request):
@@ -26,14 +38,17 @@ class TextSearchView(APIView):
             main_content = trafilatura.fetch_url(url)
             extracted_text = trafilatura.extract(
                 main_content, output_format="text", config=newconfig)
-            audio_url = text_to_audio(extracted_text[:1024], url)
+            audio_url = text_to_audio(request, extracted_text[:1024], url)
 
             return Response({'audio_url': audio_url}, status=200)
 
 
-def text_to_audio(content, url):
+def text_to_audio(request, content, url):
     # wav = tts.tts(content, speaker=tts.speakers[0], language=tts.languages[0])
-    if not TextLibrary.objects.filter(website_url=url).exists():
+    user = request.user
+    if not request.user.id:
+        return Response({'error': "No user"}, status=403)
+    if not TextLibrary.objects.filter(user=user, website_url=url).exists():
 
         device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -42,7 +57,8 @@ def text_to_audio(content, url):
 
         # get audio file
         file_id = uuid4()
-        TextLibrary.objects.create(title='', website_url=url, audio_id=file_id)
+        TextLibrary.objects.create(
+            user=user, title='', website_url=url, audio_id=file_id)
 
         file_path = f"/Users/anosharahim/storyteller-ai/backend/uploads/{file_id}.wav"
         tts.tts_to_file(
@@ -51,7 +67,7 @@ def text_to_audio(content, url):
     return "static/" + TextLibrary.objects.get(website_url=url).audio_id + ".wav"
 
 
-# user registration
+# User SIGNUP/LOGIN/LOGOUT Views
 def sign_up(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -72,17 +88,6 @@ def check_is_authenticated(request):
         return JsonResponse({"the message": "success"}, status=200)
     else:
         return JsonResponse({"error": "not logged in"}, status=403)
-
-
-class DisableCSRFMiddleware(object):
-
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        setattr(request, '_dont_enforce_csrf_checks', True)
-        response = self.get_response(request)
-        return response
 
 
 def login_handler(request):
