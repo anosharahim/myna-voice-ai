@@ -69,20 +69,6 @@ def text_to_audio(request, content, url):
     return "static/" + TextLibrary.objects.get(website_url=url).audio_id + ".wav"
 
 
-def audio_listener():
-    '''Listens and records user's audio, and returns it as a str.'''
-    r = sr.Recognizer()
-    with sr.Microphone as source:
-        audio = r.listen(source)
-        said = ""
-        try:
-            said = r.recognize_google(audio)
-            print(said)
-        except Exception as e:
-            print("Exception"+str(e))
-    return said
-
-
 # User SIGNUP/LOGIN/LOGOUT Views
 def sign_up(request):
     if request.method == 'POST':
@@ -117,10 +103,9 @@ def login_handler(request):
             return JsonResponse({'success': True}, status=200)
         else:
             return JsonResponse({'success': False}, status=403)
-
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
 def logout_handler(request):
     logout(request)
-    return JsonResponse({'sucghgcess': True}, status=200)
+    return JsonResponse({'success': True}, status=200)
