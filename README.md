@@ -10,17 +10,16 @@ In this project, I will create exactly that.
 
 Here is my rough plan for version 1 --
 
-step 1: Create an interface that takes as input a URL to a blogpost.
+✅ step 1: Create an interface that takes as input a URL to a blogpost.
 
-step 2: It converts the text into audio using text-to-speech model.
+✅ step 2: It converts the text into audio using text-to-speech model.
 
-step 2.5 stores the audio in a database if it does not already exist.
+✅ step 2.5 stores the audio in a database if it does not already exist.
+-- figure out how to store big audiofiles for users ✔️
+-- serve uploaded files on django for users to play ✔️
 
-todo:
--- figure out how to store big audiofiles for users
--- serve uploaded files on django for users to play
-
-step3: Incorporate voice detection while audio is playing, so when voice is detected, pause audio and start converting voice input to text.
+▶️ step 3: Incorporate voice detection while audio is playing, so when voice is detected, pause audio and start converting voice input to text.
+-- explore audio recognition methods 
 
 step 4: Give that input to an LLM fine-tuned on that specific ebook, and fetch text output.
 
