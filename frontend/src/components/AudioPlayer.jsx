@@ -4,26 +4,25 @@ const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 recognition.continuous = true;
-recognition.interimResults = true;
+recognition.interimResults = false; // only gets end result
 
 function AudioPlayer({ response }) {
   const audioElementRef = useRef(null);
-  //   const [response, setResponse] = useState("");
 
   useEffect(() => {
     if (!audioElementRef.current) {
       return;
     }
     let timeout = null;
-    // let isRecognitionStarted = false;
+    let isRecognitionStarted = false;
 
     recognition.onstart = () => {
       console.log("Speech recognition started");
-      // isRecognitionStarted = true;
+      isRecognitionStarted = true;
     };
     recognition.onend = () => {
       console.log("Speech recognition ended, WHY?");
-      // isRecognitionStarted = false;
+      isRecognitionStarted = false;
     };
     recognition.onerror = (event) => {
       console.error("Speech recognition error:", event.error);
@@ -36,6 +35,7 @@ function AudioPlayer({ response }) {
       if (audioElementRef.current) {
         audioElementRef.current.pause();
       }
+
       // For later: send text to backend, inject into prompt, get answer from OpenAI API, send back to frontend
       clearTimeout(timeout);
       timeout = setTimeout(() => {
@@ -45,14 +45,12 @@ function AudioPlayer({ response }) {
       }, 3000);
     };
 
-    // debugger;
     if (audioElementRef.current) {
       audioElementRef.current.onplay = () => {
-        // debugger;
-        // if (!isRecognitionStarted) {
-        recognition.start();
-        // isRecognitionStarted = true; // Set the flag when recognition starts
-        // }
+        if (!isRecognitionStarted) {
+          recognition.start();
+          isRecognitionStarted = true; // Set the flag when recognition starts
+        }
       };
     }
 
