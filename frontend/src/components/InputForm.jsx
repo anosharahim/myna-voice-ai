@@ -4,7 +4,7 @@ import AudioPlayer from "./AudioPlayer";
 
 function InputForm({ onLogOut }) {
   const [url, setUrl] = useState("");
-  const [response, setResponse] = useState("");
+  const [audio, setAudio] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,10 +12,10 @@ function InputForm({ onLogOut }) {
       const response = await axios.post("/search-view/", {
         url,
       });
-      setResponse(`/${response.data.audio_url}`);
+      setAudio(`/${response.data.audio_url}`);
     } catch (error) {
       console.error(error);
-      setResponse("Error occurred while sending the URL.");
+      setAudio("Error occurred while sending the URL.");
     }
   };
 
@@ -43,8 +43,8 @@ function InputForm({ onLogOut }) {
         <button type="submit">Submit</button>
       </form>
       <button onClick={handleLogOut}> Logout</button>
-      {response ? (
-        <AudioPlayer response={response} />
+      {audio ? (
+        <AudioPlayer response={audio} />
       ) : (
         // {/* <audio controls src={response} ref={audioElementRef}></audio> */}
         <div> no file yet </div>
