@@ -5,29 +5,26 @@ const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 recognition.continuous = true;
-recognition.interimResults = false; // only gets end result
+recognition.interimResults = false; // only gets end transcripts
 
 function AudioPlayer({ audio }) {
   const audioElementRef = useRef(null);
+  const [transcript, setTranscript] = useState("");
 
-  useEffect(() => {
-    sendUserMessage();
-  }, [transcript]);
-
-  const sendUserMessage = async (transcript, e) => {
-    // send transcript to backend
-    e.preventDefault();
+  const sendUserMessage = async (query, e) => {
+    if (e) {
+      e.preventDefault();
+    }
     try {
-      const response = await axios.post("backend/endpoint", { transcript });
+      const response = await axios.post("/message-view/", { query });
       if (response.status === 200) {
         console.log("Response from backend:", response.data);
       } else {
-        console.error("Error sending transcript to the backend");
+        console.error("Error sending query to the backend");
       }
     } catch (error) {
       console.error(error);
     }
-    // return "response from backend? ";
   };
 
   useEffect(() => {
@@ -50,18 +47,19 @@ function AudioPlayer({ audio }) {
     };
 
     recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      console.log(transcript);
-      // Use the audioElementRef to pause the audio
+      const sentenceTranscript = event.results[0][0].transcript;
+      const newTranscript = transcript + sentenceTranscript; // add all transcripts together
+      setTranscript(newTranscript);
+
+      // pause audio while user is speaking
       if (audioElementRef.current) {
         audioElementRef.current.pause();
       }
-      // Send to backend once user stops speaking, and get response from API
-      // if user continues speaking, add it to the transcript
-      // Recieve response in the frontend
-
+      // wait for more user input
       clearTimeout(timeout);
       timeout = setTimeout(() => {
+        sendUserMessage(newTranscript); //send to backend if no additional input
+        console.log(`Sending "${newTranscript}"`);
         if (audioElementRef.current) {
           audioElementRef.current.play();
         }
@@ -72,7 +70,7 @@ function AudioPlayer({ audio }) {
       audioElementRef.current.onplay = () => {
         if (!isRecognitionStarted) {
           recognition.start();
-          isRecognitionStarted = true; // Set the flag when recognition starts
+          isRecognitionStarted = true;
         }
       };
     }
