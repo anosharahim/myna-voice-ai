@@ -43,12 +43,7 @@ function InputForm({ onLogOut }) {
         <button type="submit">Submit</button>
       </form>
       <button onClick={handleLogOut}> Logout</button>
-      {audio ? (
-        <AudioPlayer audio={audio} />
-      ) : (
-        // {/* <audio controls src={response} ref={audioElementRef}></audio> */}
-        <div> no file yet </div>
-      )}
+      {audio ? <AudioPlayer audio={audio} /> : <div> no file yet </div>}
     </div>
   );
 }
