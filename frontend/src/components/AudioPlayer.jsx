@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 
 const SpeechRecognition =
@@ -6,8 +7,28 @@ const recognition = new SpeechRecognition();
 recognition.continuous = true;
 recognition.interimResults = false; // only gets end result
 
-function AudioPlayer({ response }) {
+function AudioPlayer({ audio }) {
   const audioElementRef = useRef(null);
+
+  useEffect(() => {
+    sendUserMessage();
+  }, [transcript]);
+
+  const sendUserMessage = async (transcript, e) => {
+    // send transcript to backend
+    e.preventDefault();
+    try {
+      const response = await axios.post("backend/endpoint", { transcript });
+      if (response.status === 200) {
+        console.log("Response from backend:", response.data);
+      } else {
+        console.error("Error sending transcript to the backend");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    // return "response from backend? ";
+  };
 
   useEffect(() => {
     if (!audioElementRef.current) {
@@ -35,8 +56,10 @@ function AudioPlayer({ response }) {
       if (audioElementRef.current) {
         audioElementRef.current.pause();
       }
+      // Send to backend once user stops speaking, and get response from API
+      // if user continues speaking, add it to the transcript
+      // Recieve response in the frontend
 
-      // For later: send text to backend, inject into prompt, get answer from OpenAI API, send back to frontend
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         if (audioElementRef.current) {
@@ -58,9 +81,10 @@ function AudioPlayer({ response }) {
       recognition.stop();
     };
   }, [audioElementRef.current]);
+
   return (
     <div>
-      <audio controls src={response} ref={audioElementRef}></audio>
+      <audio controls src={audio} ref={audioElementRef}></audio>
     </div>
   );
 }
