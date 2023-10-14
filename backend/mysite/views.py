@@ -33,15 +33,19 @@ class DisableCSRFMiddleware(object):
 
 class TextSearchView(APIView):
     def post(self, request):
+        if 'url' not in request.data:
+            return Response({'error': 'missing url in request data'}, status=400)
 
-        if request.method == 'POST':
-            url = request.data.get('url', '')
+        url = request.data.get('url', '')
+        if not TextLibrary.objects.filter(website_url=url).exists():
             main_content = trafilatura.fetch_url(url)
             extracted_text = trafilatura.extract(
                 main_content, output_format="text", config=newconfig)
             audio_url = text_to_audio(request, extracted_text[:1024], url)
+        else:
+            audio_url = TextLibrary.objects.get(website_url=url).audio_id
 
-            return Response({'audio_url': audio_url}, status=200)
+        return Response({'audio_url': audio_url}, status=200)
 
 
 def text_to_audio(request, content, url):
@@ -66,7 +70,7 @@ def text_to_audio(request, content, url):
         tts.tts_to_file(
             text=content, speaker=tts.speakers[0], language=tts.languages[0], file_path=file_path)
 
-    return "static/" + TextLibrary.objects.get(website_url=url).audio_id + ".wav"
+    return "static/" + TextLibrary.objects.get(website_url=url, user=user).audio_id + ".wav"
 
 
 # User SIGNUP/LOGIN/LOGOUT Views
