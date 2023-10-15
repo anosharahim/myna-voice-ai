@@ -18,10 +18,10 @@ Here is my rough plan for version 1 --
 -- figure out how to store big audiofiles for users ✔️
 -- serve uploaded files on django for users to play ✔️
 
-▶️ step 3: Incorporate voice detection while audio is playing, so when voice is detected, pause audio and start converting voice input to text.
+✅ step 3: Incorporate voice detection while audio is playing, so when voice is detected, pause audio and start converting voice input to text.
 -- explore audio recognition methods 
 
-step 4: Give that input to an LLM fine-tuned on that specific ebook, and fetch text output.
+▶️ step 4: Give that input to an LLM fine-tuned on that specific ebook, and fetch text output.
 
 step 5: Convert text output to speech, and respond.
 
