@@ -1,24 +1,28 @@
-# Idea
+# Context & Motivation 
 
-What if you could listen to audiobooks and talk to them as well?
-What if you could ask the audiobook to note down your thoughts about certain parts of the book?
-What if your audiobook could also look up things for you and help you go down rabbitholes while listening to it?
+Representative of my generation (Gen Z) is the infamously short attention span, and I am no exception to it. Luckily, I went to a university that is built on the latest education science, which takes into account the shortening attention span in students. I did not have to listen to a single lecture in my four years of undergrad. Every class had 8-20 students engaged in active discussion, powered by an education software that kept track of student engagement, and it made me genuinely excited about learning instead of battling with my mind to pay attention.
 
-In this project, I will create exactly that.
+I graduated earlier this year, and have since been frantically searching for similar types of highly engaging learning environments. One option is community, which I am lucky to have in San Francisco. The other option is self-learning via books, blogs, podcasts etc. The problem is that long-form text and audio are one-sided and hard to stay engaged with. Even at maximum sustained attention, it is still passive learning. 
 
-# Plan
+I want to build something that transforms long-form audio from passive into an active learning modality. This is why I want to build the following project.
 
-Here is my rough plan for version 1 --
+# Project Description 
+
+An app that serves blogs as podcasts where the user is an active participant. The user can ask the blog questions, and share it's own thoughts using voice, in a natural conversation format. 
+
+# Plan 
+
+Rough Plan for version 1 --
 
 ✅ step 1: Create an interface that takes as input a URL to a blogpost.
 
-✅ step 2: It converts the text into audio using text-to-speech model.
+✅ step 2: It converts the text into audio using text-to-speech (TTS/ Coqui AI) model from Hugging Face.
 
 ✅ step 2.5 stores the audio in a database if it does not already exist.
--- figure out how to store big audiofiles for users ✔️
+-- store audiofiles for users ✔️
 -- serve uploaded files on django for users to play ✔️
 
-✅ step 3: Incorporate voice detection while audio is playing, so when voice is detected, pause audio and start converting voice input to text.
+✅ step 3: Incorporate automatic speech recognition while audio is playing. Get user input and send to backend for processing.
 -- explore audio recognition methods 
 
 ▶️ step 4: Give that input to an LLM fine-tuned on that specific ebook, and fetch text output.
