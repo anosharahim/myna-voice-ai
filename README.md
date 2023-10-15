@@ -1,6 +1,6 @@
 # Context & Motivation 
 
-Representative of my generation (Gen Z) is the infamously short attention span, and I am no exception to it. Luckily, I went to a university that is built on the latest education science, which takes into account the shortening attention span in students. I did not have to listen to a single lecture in my four years of undergrad. Every class had 8-20 students engaged in active discussion, powered by an education software that kept track of student engagement, and it made me genuinely excited about learning instead of battling with my mind to pay attention.
+Representative of my generation (Gen Z) is the infamously short attention span. Luckily, I went to a university that is built on the latest education science, which takes into account the shortening attention span in students. I did not have to listen to a single lecture in my four years of undergrad. Every class had 8-20 students engaged in active discussion, powered by an education software that kept track of student engagement, and it made me genuinely excited about learning.
 
 I graduated earlier this year, and have since been frantically searching for similar types of highly engaging learning environments. One option is community, which I am lucky to have in San Francisco. The other option is self-learning via books, blogs, podcasts etc. The problem is that long-form text and audio are one-sided and hard to stay engaged with. Even at maximum sustained attention, it is still passive learning. 
 
