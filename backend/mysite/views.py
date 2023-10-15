@@ -49,6 +49,15 @@ class TextSearchView(APIView):
         return Response({'audio_url': audio_url}, status=200)
 
 
+class MessageView(APIView):
+    def post(self, request):
+        if 'query' in request.data:
+            query = request.data.get('query', '')
+            return Response({'query': query}, status=200)
+        else:
+            return Response({'error': "No user input detected"})
+
+
 def text_to_audio(request, content, url):
     '''Converts extracted content into an audio file, and saves it to user's text library.'''
     # wav = tts.tts(content, speaker=tts.speakers[0], language=tts.languages[0])
