@@ -26,6 +26,7 @@ Rough Plan for version 1 --
 -- explore audio recognition methods 
 
 ▶️ step 4: Give that input to an LLM fine-tuned on that specific ebook, and fetch text output.
+-- Explore RAG // ground LLM responses in the associated blogpost // ideally grounded in a specific span of text 
 
 step 5: Convert text output to speech, and respond.
 
