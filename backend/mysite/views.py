@@ -44,6 +44,7 @@ class TextSearchView(APIView):
             audio_url = text_to_audio(request, extracted_text[:1024], url)
         else:
             audio_url = TextLibrary.objects.get(website_url=url).audio_id
+            audio_url = "static/" + audio_url + ".wav"
 
         return Response({'audio_url': audio_url}, status=200)
 
