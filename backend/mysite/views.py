@@ -14,6 +14,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import speech_recognition as sr
+from config import OPENAI_GPT4_KEY
+import openai
 
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
@@ -51,16 +53,32 @@ class TextSearchView(APIView):
 
 class MessageView(APIView):
     def post(self, request):
+        '''Receives user input queries from the frontend.'''
         if 'query' in request.data:
             query = request.data.get('query', '')
-            return Response({'query': query}, status=200)
+            prompt = self.generatePrompt(query)
+            response = openai.ChatCompletion.create(
+                model='gpt-4',
+                messages=[{'role': 'user', 'content': prompt}],
+                temperature=0.3,
+                api_key=OPENAI_GPT4_KEY,
+            )
+            result = response.choices[0].message.content
+            # TODO: convert result into audio to be played by the frontend.
+            return Response({'result': result}, status=200)
+
         else:
             return Response({'error': "No user input detected"})
+
+    def generatePrompt(self, user_query):
+        '''Generates LLM prompt from user query.'''
+        # todo: engineer the prompt for better output
+        prompt = user_query + "be concise."
+        return prompt
 
 
 def text_to_audio(request, content, url):
     '''Converts extracted content into an audio file, and saves it to user's text library.'''
-    # wav = tts.tts(content, speaker=tts.speakers[0], language=tts.languages[0])
     user = request.user
     if not request.user.id:
         return Response({'error': "No user"}, status=403)
@@ -71,7 +89,6 @@ def text_to_audio(request, content, url):
         model_name = TTS().list_models()[0]
         tts = TTS(model_name).to(device)
 
-        # get audio file
         file_id = uuid4()
         TextLibrary.objects.create(
             user=user, title='', website_url=url, audio_id=file_id)
