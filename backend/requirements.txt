@@ -5,3 +5,4 @@ torch
 TTS
 django-cors-headers
 SpeechRecognition
+openai 
