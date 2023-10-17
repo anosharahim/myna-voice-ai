@@ -37,13 +37,21 @@ class TextSearchView(APIView):
     def post(self, request):
         if 'url' not in request.data:
             return Response({'error': 'missing url in request data'}, status=400)
-
         url = request.data.get('url', '')
         if not TextLibrary.objects.filter(website_url=url).exists():
             main_content = trafilatura.fetch_url(url)
             extracted_text = trafilatura.extract(
                 main_content, output_format="text", config=newconfig)
             audio_url = text_to_audio(request, extracted_text[:1024], url)
+            # TODO: Convert each text file into an embedding when it is extracted and store in the model
+            openai_response = openai.Embedding.create(
+                input=extracted_text,
+                model="text-embedding-ada-002"
+            )
+            embeddings = openai_response['data'][0]['embedding']
+            print(embeddings)
+            # audio_instance = TextLibrary.objects.get(website_url=url)
+
         else:
             audio_url = TextLibrary.objects.get(website_url=url).audio_id
             audio_url = "static/" + audio_url + ".wav"
@@ -79,6 +87,7 @@ class MessageView(APIView):
 
 def text_to_audio(request, content, url):
     '''Converts extracted content into an audio file, and saves it to user's text library.'''
+
     user = request.user
     if not request.user.id:
         return Response({'error': "No user"}, status=403)
