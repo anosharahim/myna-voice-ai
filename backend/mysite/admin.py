@@ -4,7 +4,7 @@ from .models import TextLibrary, UserAudios
 
 class TextAdmin(admin.ModelAdmin):
     list_display = ('user', 'title', 'audio_id',
-                    'website_url', 'text_content')
+                    'website_url', 'text_content', 'embedding')
 
 
 class UserAudioAdmin(admin.ModelAdmin):

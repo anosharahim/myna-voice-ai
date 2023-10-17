@@ -8,6 +8,7 @@ class TextLibrary(models.Model):
     audio_id = models.TextField(default=None)
     website_url = models.URLField(unique=True)
     text_content = models.TextField(null=True)
+    embedding = models.JSONField(null=True)
 
     def __str__(self):
         return self.title
