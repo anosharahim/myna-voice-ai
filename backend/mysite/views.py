@@ -84,6 +84,15 @@ class MessageView(APIView):
         prompt = user_query + "be concise."
         return prompt
 
+def create_embedding(text):
+    openai.api_key = OPENAI_GPT4_KEY
+    openai_response = openai.Embedding.create(
+        input=text,
+        model="text-embedding-ada-002"
+    )
+    embeddings = openai_response['data'][0]['embedding']
+    return embeddings
+
 
 def text_to_audio(request, content, url):
     '''Converts extracted content into an audio file, and saves it to user's text library.'''
