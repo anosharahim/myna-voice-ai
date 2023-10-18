@@ -43,18 +43,17 @@ class TextSearchView(APIView):
             extracted_text = trafilatura.extract(
                 main_content, output_format="text", config=newconfig)
             audio_url = text_to_audio(request, extracted_text[:1024], url)
-            # TODO: Convert each text file into an embedding when it is extracted and store in the model
-            openai_response = openai.Embedding.create(
-                input=extracted_text,
-                model="text-embedding-ada-002"
-            )
-            embeddings = openai_response['data'][0]['embedding']
-            print(embeddings)
-            # audio_instance = TextLibrary.objects.get(website_url=url)
 
         else:
             audio_url = TextLibrary.objects.get(website_url=url).audio_id
             audio_url = "static/" + audio_url + ".wav"
+
+        # create and save embedding to model
+        audio_instance = TextLibrary.objects.get(website_url=url)
+        if not audio_instance.embedding:
+            audio_embedding = create_embedding(extracted_text)
+            audio_instance.embedding = audio_embedding
+            audio_instance.save()
 
         return Response({'audio_url': audio_url}, status=200)
 
@@ -83,6 +82,7 @@ class MessageView(APIView):
         # todo: engineer the prompt for better output
         prompt = user_query + "be concise."
         return prompt
+
 
 def create_embedding(text):
     openai.api_key = OPENAI_GPT4_KEY
