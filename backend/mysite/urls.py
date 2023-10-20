@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import TextSearchView, MessageView, sign_up, login_handler, check_is_authenticated, logout_handler
+from .views import TextSearchView, MessageView, AudioLibraryView, sign_up, login_handler, check_is_authenticated, logout_handler
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -29,4 +29,6 @@ urlpatterns = [
     path("logout/", logout_handler, name="logout"),
     path('check-is-authenticated/', check_is_authenticated,
          name='check-is-authenticated'),
+    path('get-audio-library/', AudioLibraryView.as_view(),
+         name='get-audio-library'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

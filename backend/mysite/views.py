@@ -58,6 +58,14 @@ class TextSearchView(APIView):
         return Response({'audio_url': audio_url}, status=200)
 
 
+class AudioLibraryView(APIView):
+    def get(self, request):
+        '''Sends user's audio library to frontend.'''
+        user = request.user
+        audio_library = TextLibrary.objects.filter(user=user)
+        #TODO: return this library in an easily viewable, playable format
+
+
 class MessageView(APIView):
     def post(self, request):
         '''Receives user input queries from the frontend.'''
