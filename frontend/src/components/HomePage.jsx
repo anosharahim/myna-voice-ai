@@ -5,6 +5,20 @@ import AudioPlayer from "./AudioPlayer";
 function InputForm({ onLogOut }) {
   const [url, setUrl] = useState("");
   const [audio, setAudio] = useState("");
+  const [audioLibrary, setAudioLibrary] = useState([]);
+
+  //Fetch the user's audio library when the component mounts
+  useEffect(() => {
+    async function fetchAudioLibrary() {
+      try {
+        const response = await axios.get("/get-audio-library"); // Replace later
+        setAudioLibrary(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchAudioLibrary();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,6 +58,18 @@ function InputForm({ onLogOut }) {
       </form>
       <button onClick={handleLogOut}> Logout</button>
       {audio ? <AudioPlayer audio={audio} /> : <div> no file yet </div>}
+
+      {/* Display the user's audio library */}
+      <div>
+        <h2>Your Audio Library</h2>
+        <ul>
+          {audioLibrary.map((audioItem, index) => (
+            <li key={index}>
+              <AudioPlayer audio={audioItem.url} />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
