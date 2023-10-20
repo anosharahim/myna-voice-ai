@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class TextLibrary(models.Model):
+class GlobalAudioLibrary(models.Model):  # Global audio library
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=120)
     audio_id = models.TextField(default=None)
@@ -16,7 +16,7 @@ class TextLibrary(models.Model):
 
 class UserAudios(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    audio = models.ForeignKey(TextLibrary, on_delete=models.CASCADE)
+    audio = models.ForeignKey(GlobalAudioLibrary, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
