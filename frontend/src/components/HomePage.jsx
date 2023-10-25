@@ -11,8 +11,8 @@ function InputForm({ onLogOut }) {
   useEffect(() => {
     async function fetchAudioLibrary() {
       try {
-        const response = await axios.get("/get-audio-library"); // Replace later
-        setAudioLibrary(response.data);
+        const response = await axios.get("/get-audio-library");
+        setAudioLibrary(response.data.audio_urls);
       } catch (error) {
         console.error(error);
       }
@@ -58,17 +58,21 @@ function InputForm({ onLogOut }) {
       </form>
       <button onClick={handleLogOut}> Logout</button>
       {audio ? <AudioPlayer audio={audio} /> : <div> no file yet </div>}
-
-      {/* Display the user's audio library */}
       <div>
-        <h2>Your Audio Library</h2>
-        <ul>
-          {audioLibrary.map((audioItem, index) => (
-            <li key={index}>
-              <AudioPlayer audio={audioItem.url} />
-            </li>
-          ))}
-        </ul>
+        <h1>User's Audio Library</h1>
+        <div>
+          {audioLibrary.length > 0 ? (
+            <ul>
+              {audioLibrary.map((audio, index) => (
+                <li key={index}>
+                  <AudioPlayer audio={audio} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div>No audio files in the library yet.</div>
+          )}
+        </div>
       </div>
     </div>
   );
