@@ -1,12 +1,13 @@
 from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import serializers
 import trafilatura
 from trafilatura.settings import use_config
 import torch
 from TTS.api import TTS
 from uuid import uuid4
-from .models import GlobalAudioLibrary
+from .models import GlobalAudioLibrary, UserAudios
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -61,10 +62,11 @@ class TextSearchView(APIView):
 
 class AudioLibraryView(APIView):
     def get(self, request):
-        '''Sends user's audio library to frontend.'''
+        '''Sends all of user's audio library to frontend.'''
         user = request.user
-        audio_library = GlobalAudioLibrary.objects.filter(user=user)
-        # TODO: return this library in an easily viewable, playable format
+        user_audios = GlobalAudioLibrary.objects.filter(user=user)
+        audio_urls = [f"static/{audio.audio_id}.wav" for audio in user_audios]
+        return Response({'audio_urls': audio_urls}, status=200)
 
 
 class MessageView(APIView):
