@@ -1,6 +1,6 @@
 // import logo from "./logo.svg";
 import "./App.css";
-import InputForm from "./components/InputForm";
+import InputForm from "./components/HomePage";
 import SignUpForm from "./components/SignUpForm";
 import SignInForm from "./components/SignInForm";
 import { useEffect, useState } from "react";
