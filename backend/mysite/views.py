@@ -21,8 +21,6 @@ import openai
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
 
-# Security
-
 
 class DisableCSRFMiddleware(object):
     def __init__(self, get_response):
@@ -35,6 +33,8 @@ class DisableCSRFMiddleware(object):
 
 
 class TextSearchView(APIView):
+    '''Recieves blog urls from frontend to generate audios and saves thems in DB.'''
+
     def post(self, request):
         if 'url' not in request.data:
             return Response({'error': 'missing url in request data'}, status=400)
@@ -61,8 +61,9 @@ class TextSearchView(APIView):
 
 
 class AudioLibraryView(APIView):
+    '''Sends user's audio library data to client.'''
+
     def get(self, request):
-        '''Sends all of user's audio library to frontend.'''
         user = request.user
         user_audios = GlobalAudioLibrary.objects.filter(
             user=user).values('title', 'audio_id')
@@ -72,8 +73,9 @@ class AudioLibraryView(APIView):
 
 
 class MessageView(APIView):
+    '''Receives speech-based user input queries from the client.'''
+
     def post(self, request):
-        '''Receives user input queries from the frontend.'''
         if 'query' in request.data:
             query = request.data.get('query', '')
             prompt = self.generatePrompt(query)
@@ -92,12 +94,13 @@ class MessageView(APIView):
 
     def generatePrompt(self, user_query):
         '''Generates LLM prompt from user query.'''
-        # todo: engineer the prompt for better output
+        # TODO: engineer the prompt for better output
         prompt = user_query + "be concise."
         return prompt
 
 
 def create_embedding(text):
+    '''Generates embeddings for audio text.'''
     openai.api_key = OPENAI_GPT4_KEY
     openai_response = openai.Embedding.create(
         input=text,
@@ -108,7 +111,7 @@ def create_embedding(text):
 
 
 def text_to_audio(request, content, url):
-    '''Converts extracted content into an audio file, and saves it to user's text library.'''
+    '''Converts extracted content into an audio file, and saves it to DB.'''
 
     user = request.user
     if not request.user.id:
@@ -131,8 +134,8 @@ def text_to_audio(request, content, url):
     return "static/" + GlobalAudioLibrary.objects.get(website_url=url, user=user).audio_id + ".wav"
 
 
-# User SIGNUP/LOGIN/LOGOUT Views
 def sign_up(request):
+    '''Creates a new account for the user.'''
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data.get('name')
@@ -148,6 +151,7 @@ def sign_up(request):
 
 
 def check_is_authenticated(request):
+    '''Checks if user is authenticated.'''
     if request.user and request.user.id:
         return JsonResponse({"the message": "success"}, status=200)
     else:
@@ -155,6 +159,7 @@ def check_is_authenticated(request):
 
 
 def login_handler(request):
+    '''Logs users into their account.'''
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data.get('name')
@@ -169,5 +174,6 @@ def login_handler(request):
 
 
 def logout_handler(request):
+    '''Logs out user.'''
     logout(request)
     return JsonResponse({'success': True}, status=200)
