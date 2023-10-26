@@ -9,12 +9,12 @@ Things to do:
 
 - Colors:
 
-1. F5E960
-2. 464655
-3. 4DAA57
-4. FFACE4
-5. EDFFEC
+1. F5E960 ![#F5E960](https://via.placeholder.com/15/F5E960/000000?text=+) 
+3. 464655 ![#464655](https://via.placeholder.com/15/464655/000000?text=+)
+4. 4DAA57 ![#4DAA57](https://via.placeholder.com/15/4DAA57/000000?text=+)
+5. FFACE4 ![#FFACE4](https://via.placeholder.com/15/FFACE4/000000?text=+)
+6. EDFFEC ![#EDFFEC](https://via.placeholder.com/15/EDFFEC/000000?text=+)
 
-<span style="background-color: #FFACE4; color: #fff; padding: 5px;">&nbsp;</span>
-![#FFACE4](https://via.placeholder.com/15/FFACE4/000000?text=+)
-s
+
+
+
