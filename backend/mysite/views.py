@@ -124,6 +124,7 @@ def text_to_audio(request, content, url):
         tts = TTS(model_name).to(device)
 
         file_id = uuid4()
+        # TODO: save an actual title along with the audio files.
         GlobalAudioLibrary.objects.create(
             user=user, title='', website_url=url, audio_id=file_id)
 
