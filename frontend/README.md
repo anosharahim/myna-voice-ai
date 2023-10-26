@@ -16,3 +16,5 @@ Things to do:
 5. EDFFEC
 
 <span style="background-color: #FFACE4; color: #fff; padding: 5px;">&nbsp;</span>
+![#FFACE4](https://via.placeholder.com/15/FFACE4/000000?text=+)
+s
