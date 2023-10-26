@@ -5,16 +5,14 @@ Things to do:
 - Convert LLM response to audio and play it mid-audio.
 - Better UI.
 
-# UI /UX Notes
+# UI / UX Notes
 
-- Colors:
+### App Colors
 
-1. F5E960 ![#F5E960](https://via.placeholder.com/15/F5E960/000000?text=+) 
-3. 464655 ![#464655](https://via.placeholder.com/15/464655/000000?text=+)
-4. 4DAA57 ![#4DAA57](https://via.placeholder.com/15/4DAA57/000000?text=+)
-5. FFACE4 ![#FFACE4](https://via.placeholder.com/15/FFACE4/000000?text=+)
-6. EDFFEC ![#EDFFEC](https://via.placeholder.com/15/EDFFEC/000000?text=+)
+![#F5E960](https://via.placeholder.com/15/F5E960/000000?text=+) ![#464655](https://via.placeholder.com/15/464655/000000?text=+) ![#4DAA57](https://via.placeholder.com/15/4DAA57/000000?text=+) ![#FFACE4](https://via.placeholder.com/15/FFACE4/000000?text=+) ![#EDFFEC](https://via.placeholder.com/15/EDFFEC/000000?text=+)
 
-
-
-
+1. F5E960 ![#F5E960](https://via.placeholder.com/15/F5E960/000000?text=+)
+2. 464655 ![#464655](https://via.placeholder.com/15/464655/000000?text=+)
+3. 4DAA57 ![#4DAA57](https://via.placeholder.com/15/4DAA57/000000?text=+)
+4. FFACE4 ![#FFACE4](https://via.placeholder.com/15/FFACE4/000000?text=+)
+5. EDFFEC ![#EDFFEC](https://via.placeholder.com/15/EDFFEC/000000?text=+)
