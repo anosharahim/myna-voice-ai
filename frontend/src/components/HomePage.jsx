@@ -12,7 +12,7 @@ function InputForm({ onLogOut }) {
     async function fetchAudioLibrary() {
       try {
         const response = await axios.get("/get-audio-library");
-        setAudioLibrary(response.data.audio_urls);
+        setAudioLibrary(response.data.audio_library_data);
       } catch (error) {
         console.error(error);
       }
@@ -65,6 +65,7 @@ function InputForm({ onLogOut }) {
             <ul>
               {audioLibrary.map((audio, index) => (
                 <li key={index}>
+                  <h3>{audio.title}</h3>
                   <AudioPlayer audio={audio} />
                 </li>
               ))}

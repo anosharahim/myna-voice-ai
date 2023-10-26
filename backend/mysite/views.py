@@ -64,9 +64,11 @@ class AudioLibraryView(APIView):
     def get(self, request):
         '''Sends all of user's audio library to frontend.'''
         user = request.user
-        user_audios = GlobalAudioLibrary.objects.filter(user=user)
-        audio_urls = [f"static/{audio.audio_id}.wav" for audio in user_audios]
-        return Response({'audio_urls': audio_urls}, status=200)
+        user_audios = GlobalAudioLibrary.objects.filter(
+            user=user).values('title', 'audio_id')
+        audio_library_data = [{'title': audio['title'],
+                               'url': f"static/{audio['audio_id']}.wav"} for audio in user_audios]
+        return Response({'audio_library_data': audio_library_data}, status=200)
 
 
 class MessageView(APIView):
