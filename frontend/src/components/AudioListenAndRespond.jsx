@@ -7,7 +7,7 @@ const recognition = new SpeechRecognition();
 recognition.continuous = true;
 recognition.interimResults = false; // only gets end transcripts
 
-function AudioPlayer({ audio }) {
+function AudioListenAndRespond({ audio }) {
   const audioElementRef = useRef(null);
   const [transcript, setTranscript] = useState("");
 
@@ -87,4 +87,4 @@ function AudioPlayer({ audio }) {
   );
 }
 
-export default AudioPlayer;
+export default AudioListenAndRespond;
