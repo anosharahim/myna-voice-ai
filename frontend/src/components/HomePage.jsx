@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AudioListenAndRespond from "./AudioListenAndRespond";
+import AudioJustListen from "./AudioJustListen";
 
 function InputForm({ onLogOut }) {
   const [url, setUrl] = useState("");
@@ -57,11 +58,7 @@ function InputForm({ onLogOut }) {
         <button type="submit">Submit</button>
       </form>
       <button onClick={handleLogOut}> Logout</button>
-      {audio ? (
-        <AudioListenAndRespond audio={audio} />
-      ) : (
-        <div> no file yet </div>
-      )}
+      {audio ? <AudioJustListen audio={audio} /> : <div> no file yet </div>}
       <div>
         <h1>User's Audio Library</h1>
         <div>
@@ -70,7 +67,7 @@ function InputForm({ onLogOut }) {
               {audioLibrary.map((audio, index) => (
                 <li key={index}>
                   <h3>{audio.title}</h3>
-                  <Audio audio={audio} />
+                  <AudioJustListen audio={audio.url} />
                 </li>
               ))}
             </ul>
