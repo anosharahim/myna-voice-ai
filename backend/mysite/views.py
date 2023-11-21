@@ -17,6 +17,8 @@ import json
 import speech_recognition as sr
 from config import OPENAI_GPT4_KEY
 import openai
+import requests
+from bs4 import BeautifulSoup
 
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
@@ -40,10 +42,17 @@ class TextSearchView(APIView):
             return Response({'error': 'missing url in request data'}, status=400)
         url = request.data.get('url', '')
         if not GlobalAudioLibrary.objects.filter(website_url=url).exists():
-            main_content = trafilatura.fetch_url(url)
+            html_content = trafilatura.fetch_url(url)
             extracted_text = trafilatura.extract(
-                main_content, output_format="text", config=newconfig)
-            audio_url = text_to_audio(request, extracted_text[:1024], url)
+                html_content, output_format="text", config=newconfig)
+
+            # Get the title of the article
+            soup = BeautifulSoup(html_content, 'html.parser')
+            title_tag = soup.find('title')
+            content_title = title_tag.text if title_tag else "Title not found"
+
+            audio_url = text_to_audio(
+                request, extracted_text[:1024], url, content_title)
 
         else:
             audio_url = GlobalAudioLibrary.objects.get(
@@ -110,7 +119,7 @@ def create_embedding(text):
     return embeddings
 
 
-def text_to_audio(request, content, url):
+def text_to_audio(request, content, url, title):
     '''Converts extracted content into an audio file, and saves it to DB.'''
 
     user = request.user
@@ -124,9 +133,8 @@ def text_to_audio(request, content, url):
         tts = TTS(model_name).to(device)
 
         file_id = uuid4()
-        # TODO: save an actual title along with the audio files.
         GlobalAudioLibrary.objects.create(
-            user=user, title='', website_url=url, audio_id=file_id)
+            user=user, title=title, website_url=url, audio_id=file_id)
 
         file_path = f"/Users/anosharahim/storyteller-ai/backend/uploads/{file_id}.wav"
         tts.tts_to_file(

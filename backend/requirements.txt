@@ -6,3 +6,4 @@ TTS
 django-cors-headers
 SpeechRecognition
 openai 
+bs4
