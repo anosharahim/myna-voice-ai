@@ -46,6 +46,7 @@ function InputForm({ onLogOut }) {
   };
   return (
     <div>
+      <h1> Home </h1>
       <form onSubmit={handleSubmit}>
         <label>
           Enter URL:
@@ -60,7 +61,7 @@ function InputForm({ onLogOut }) {
       <button onClick={handleLogOut}> Logout</button>
       {audio ? <AudioJustListen audio={audio} /> : <div> no file yet </div>}
       <div>
-        <h1>User's Audio Library</h1>
+        <h2>My Library</h2>
         <div>
           {audioLibrary.length > 0 ? (
             <ul>

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 axios.defaults.withCredentials = true;
@@ -5,6 +6,7 @@ axios.defaults.withCredentials = true;
 export default function SignUpForm({ onAuthentication }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   // Handling the name change
   const handleName = (e) => {
@@ -30,6 +32,7 @@ export default function SignUpForm({ onAuthentication }) {
       );
       // TODO check response status
       onAuthentication();
+      navigate("/home");
     } catch (error) {
       console.error(error);
     }

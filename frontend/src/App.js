@@ -58,6 +58,10 @@ function App() {
             path="/login"
             element={<SignInForm onAuthentication={handleAuthentication} />}
           />
+          <Route
+            path="/home"
+            element={<HomePage onAuthentication={handleAuthentication} />}
+          />
         </Routes>
       </div>
     </Router>
