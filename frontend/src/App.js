@@ -3,6 +3,10 @@ import "./App.css";
 import InputForm from "./components/HomePage";
 import SignUpForm from "./components/SignUpForm";
 import SignInForm from "./components/SignInForm";
+import LandingPage from "./components/LandingPage";
+import HomePage from "./components/HomePage";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 
 function App() {
@@ -43,24 +47,38 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <Router>
       <div className="App">
-        {isAuthenticated ? (
+        <Routes>
+          <Route
+            path="/"
+            element={!isAuthenticated ? <LandingPage /> : <HomePage />}
+          />
+          <Route
+            path="/signup"
+            element={<SignUpForm onAuthentication={handleAuthentication} />}
+          />
+        </Routes>
+      </div>
+    </Router>
+    // <div className="App">
+    //   <div className="App">
+    //     {!isAuthenticated ? <LandingPage /> : <HomePage />}
+    //   </div>
+    // </div>
+  );
+}
+
+export default App;
+
+{
+  /* {isAuthenticated ? (
           <InputForm onLogOut={handleLogOut} />
         ) : isSignUp ? (
           <SignUpForm onAuthentication={handleAuthentication} />
         ) : (
           <>
             <SignInForm onAuthentication={handleAuthentication} />
-            <button onClick={handleGoToSignUp} className="btn" type="submit">
-              {" "}
-              Create Account
-            </button>
           </>
-        )}
-      </div>
-    </div>
-  );
+        )} */
 }
-
-export default App;

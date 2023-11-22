@@ -1,9 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   const handleGetStarted = () => {
     console.log("Redirect to SignUp");
-    // You can implement the navigation logic here
+    navigate("/signup");
   };
 
   return (
