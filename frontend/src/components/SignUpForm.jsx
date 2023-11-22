@@ -38,11 +38,11 @@ export default function SignUpForm() {
   return (
     <div className="form">
       <div>
-        <h1>User Registration</h1>
+        <h1>Sign Up</h1>
       </div>
       <form>
         {/* Labels and inputs for form data */}
-        <label className="label">Name</label>
+        <label className="label">Username</label>
         <input
           onChange={handleName}
           className="input"
@@ -50,7 +50,7 @@ export default function SignUpForm() {
           type="text"
         />
 
-        <label className="label">Password</label>
+        <label className="label">Create Password</label>
         <input
           onChange={handlePassword}
           className="input"
@@ -58,9 +58,13 @@ export default function SignUpForm() {
           type="password"
         />
 
-        <button onClick={handleSubmit} className="btn" type="submit">
-          Submit
+        <button onClick={handleSubmit} className="signup-button">
+          Login
         </button>
+
+        <p className="login-link-text">
+          Already have an account? <a href="/login">Log in here</a>.
+        </p>
       </form>
     </div>
   );

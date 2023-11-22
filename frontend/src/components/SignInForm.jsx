@@ -37,7 +37,7 @@ export default function SignUpForm({ onAuthentication }) {
   return (
     <div className="form">
       <div>
-        <h1>User SignIn</h1>
+        <h1>Welcome Back</h1>
       </div>
       <form>
         {/* Labels and inputs for form data */}
@@ -60,6 +60,10 @@ export default function SignUpForm({ onAuthentication }) {
         <button onClick={handleSubmit} className="btn" type="submit">
           Submit
         </button>
+
+        <p className="signup-link-text">
+          Don't have an account? <a href="/signup">Sign up here.</a>.
+        </p>
       </form>
     </div>
   );
