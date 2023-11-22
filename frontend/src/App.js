@@ -11,19 +11,9 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
 
-  const handleGoToSignUp = () => {
-    // go to sign-up page
-    setIsSignUp(true);
-  };
   const handleAuthentication = () => {
     setIsAuthenticated(true);
-  };
-  const handleLogOut = () => {
-    setIsAuthenticated(false);
-    checkAuthentication();
-    window.location.reload(false);
   };
 
   const checkAuthentication = () => {
@@ -46,6 +36,12 @@ function App() {
     checkAuthentication(); // Check authentication status on component mount
   }, []);
 
+  const handleLogOut = () => {
+    setIsAuthenticated(false);
+    checkAuthentication();
+    window.location.reload(false);
+  };
+
   return (
     <Router>
       <div className="App">
@@ -58,27 +54,14 @@ function App() {
             path="/signup"
             element={<SignUpForm onAuthentication={handleAuthentication} />}
           />
+          <Route
+            path="/login"
+            element={<SignInForm onAuthentication={handleAuthentication} />}
+          />
         </Routes>
       </div>
     </Router>
-    // <div className="App">
-    //   <div className="App">
-    //     {!isAuthenticated ? <LandingPage /> : <HomePage />}
-    //   </div>
-    // </div>
   );
 }
 
 export default App;
-
-{
-  /* {isAuthenticated ? (
-          <InputForm onLogOut={handleLogOut} />
-        ) : isSignUp ? (
-          <SignUpForm onAuthentication={handleAuthentication} />
-        ) : (
-          <>
-            <SignInForm onAuthentication={handleAuthentication} />
-          </>
-        )} */
-}
