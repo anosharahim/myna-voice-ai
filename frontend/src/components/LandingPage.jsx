@@ -9,11 +9,11 @@ const LandingPage = () => {
   };
 
   return (
-    <div>
-      <div>
-        <p>Transform any blog into a podcast that you can talk to.</p>
-        <button onClick={handleGetStarted}>Get Started</button>
+    <div className="landing-page-container">
+      <div className="landing-page-tagline">
+        Transform any blog into a podcast that you can talk to.
       </div>
+      <button onClick={handleGetStarted}>Get Started</button>
     </div>
   );
 };

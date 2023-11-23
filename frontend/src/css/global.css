@@ -41,3 +41,17 @@ button {
 button:hover {
   opacity: 1;
 }
+/* Landing Page */
+.landing-page-container {
+  padding: 200px;
+  background-color: #4daa57;
+  min-height: 100vh;
+}
+
+.landing-page-tagline {
+  font-size: 80px;
+  font-weight: 800;
+  color: #fface4;
+  -webkit-text-stroke: 1px #000; /* Outline width and color for WebKit browsers */
+  margin-bottom: 50px;
+}
