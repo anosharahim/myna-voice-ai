@@ -36,40 +36,39 @@ export default function SignUpForm() {
   };
 
   return (
-    // <div className="signup-container">
+    <div className="signup-container">
+      <div className="form">
+        <div className="signup-title">Sign Up</div>
+        <form>
+          {/* Labels and inputs for form data */}
+          <div classname="input-field">
+            <label className="label">Username</label>
+            <input
+              onChange={handleName}
+              className="input"
+              value={name}
+              type="text"
+            />
+          </div>
+          <div className="input-field">
+            <label className="label">Create Password</label>
+            <input
+              onChange={handlePassword}
+              className="input"
+              value={password}
+              type="password"
+            />
+          </div>
 
-    <div className="form">
-      <div className="signup-title">Sign Up</div>
-      <form>
-        {/* Labels and inputs for form data */}
-        <div classname="input-field">
-          <label className="label">Username</label>
-          <input
-            onChange={handleName}
-            className="input"
-            value={name}
-            type="text"
-          />
-        </div>
-        <div className="input-field">
-          <label className="label">Create Password</label>
-          <input
-            onChange={handlePassword}
-            className="input"
-            value={password}
-            type="password"
-          />
-        </div>
+          <button onClick={handleSubmit} className="signup-button">
+            Login
+          </button>
 
-        <button onClick={handleSubmit} className="signup-button">
-          Login
-        </button>
-
-        <p className="login-link-text">
-          Already have an account? <a href="/login">Log in here</a>.
-        </p>
-      </form>
+          <p className="login-link-text">
+            Already have an account? <a href="/login">Log in here</a>.
+          </p>
+        </form>
+      </div>
     </div>
-    // </div>
   );
 }
