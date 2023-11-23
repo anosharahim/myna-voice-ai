@@ -28,19 +28,21 @@ body {
 
 /* Set a style for all buttons */
 button {
-  background-color: #04aa6d;
-  color: white;
+  background-color: #f5e960;
+  color: black;
   padding: 14px 20px;
   margin: 8px 0;
-  border: none;
+  border: 1px solid #000; /* Border width and color */
+  border-radius: 10px;
   cursor: pointer;
-  width: 100%;
+  /* width: 20%; */
   opacity: 0.9;
 }
 
 button:hover {
   opacity: 1;
 }
+
 /* Landing Page */
 .landing-page-container {
   padding: 200px;
@@ -54,4 +56,20 @@ button:hover {
   color: #fface4;
   -webkit-text-stroke: 1px #000; /* Outline width and color for WebKit browsers */
   margin-bottom: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .form {
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .landing-page-container {
+    padding-left: 20px;
+    padding-right: 30px;
+    padding-top: 50px;
+  }
+
+  .landing-page-tagline {
+    font-size: 60px; /* Adjust font size for smaller screens */
+  }
 }
