@@ -36,27 +36,30 @@ export default function SignUpForm() {
   };
 
   return (
+    // <div className="signup-container">
+
     <div className="form">
-      <div>
-        <h1>Sign Up</h1>
-      </div>
+      <div className="signup-title">Sign Up</div>
       <form>
         {/* Labels and inputs for form data */}
-        <label className="label">Username</label>
-        <input
-          onChange={handleName}
-          className="input"
-          value={name}
-          type="text"
-        />
-
-        <label className="label">Create Password</label>
-        <input
-          onChange={handlePassword}
-          className="input"
-          value={password}
-          type="password"
-        />
+        <div classname="input-field">
+          <label className="label">Username</label>
+          <input
+            onChange={handleName}
+            className="input"
+            value={name}
+            type="text"
+          />
+        </div>
+        <div className="input-field">
+          <label className="label">Create Password</label>
+          <input
+            onChange={handlePassword}
+            className="input"
+            value={password}
+            type="password"
+          />
+        </div>
 
         <button onClick={handleSubmit} className="signup-button">
           Login
@@ -67,5 +70,6 @@ export default function SignUpForm() {
         </p>
       </form>
     </div>
+    // </div>
   );
 }

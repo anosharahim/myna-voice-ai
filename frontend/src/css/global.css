@@ -8,25 +8,6 @@ body {
   font-weight: 300;
 }
 
-.form {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-}
-
-.input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 16px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Set a style for all buttons */
 button {
   background-color: #f5e960;
   color: black;
@@ -43,7 +24,7 @@ button:hover {
   opacity: 1;
 }
 
-/* Landing Page */
+/* Landing Page Styling*/
 .landing-page-container {
   padding: 200px;
   background-color: #4daa57;
@@ -54,13 +35,13 @@ button:hover {
   font-size: 80px;
   font-weight: 800;
   color: #fface4;
-  -webkit-text-stroke: 1px #000; /* Outline width and color for WebKit browsers */
+  -webkit-text-stroke: 1px #000; /* text outline border */
   margin-bottom: 50px;
 }
 
 @media only screen and (max-width: 600px) {
   .form {
-    padding: 10px; /* Adjust padding for smaller screens */
+    padding: 10px;
   }
 
   .landing-page-container {
@@ -72,4 +53,54 @@ button:hover {
   .landing-page-tagline {
     font-size: 60px; /* Adjust font size for smaller screens */
   }
+}
+
+/* Sign Up / Sign In styling */
+
+.signup-title {
+  color: #4daa57;
+  font-weight: 800;
+  font-size: 50px;
+  -webkit-text-stroke: 1px #000;
+  margin-bottom: 30px;
+}
+
+.form {
+  max-width: 400px;
+  font-size: 12px;
+  background-color: #fface4;
+  min-height: 100vh;
+  /* margin: 20px auto; */
+  padding: 100px 40px;
+  /* text-align: center; */
+  /* border: 1px solid #ccc; */
+  border-radius: 8px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: none;
+  background-color: transparent; /* Set background to transparent */
+  border-bottom: 1px solid #000; /* Add a bottom border for the horizontal line effect */
+  outline: none; /* Remove the default focus outline */
+}
+
+.input-field {
+  margin: 20px 0px;
+}
+
+.signup-button {
+  background-color: #f5e960;
+  color: black;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: 1px solid #000; /* Border width and color */
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
 }
