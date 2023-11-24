@@ -1,6 +1,5 @@
 // import logo from "./logo.svg";
 import "./App.css";
-import InputForm from "./components/HomePage";
 import SignUpForm from "./components/SignUpForm";
 import SignInForm from "./components/SignInForm";
 import LandingPage from "./components/LandingPage";
@@ -61,6 +60,10 @@ function App() {
           <Route
             path="/home"
             element={<HomePage onAuthentication={handleAuthentication} />}
+          />
+          <Route
+            path="/landing"
+            element={<LandingPage onAuthentication={handleAuthentication} />}
           />
         </Routes>
       </div>
