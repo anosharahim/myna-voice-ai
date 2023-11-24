@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AudioListenAndRespond from "./AudioListenAndRespond";
 import AudioJustListen from "./AudioJustListen";
 
-function InputForm({ onLogOut }) {
+function HomePage({}) {
   const [url, setUrl] = useState("");
   const [audio, setAudio] = useState("");
   const [audioLibrary, setAudioLibrary] = useState([]);
+  const navigate = useNavigate();
 
   //Fetch the user's audio library when the component mounts
   useEffect(() => {
@@ -39,7 +41,7 @@ function InputForm({ onLogOut }) {
     try {
       const response = await axios.get("/logout/");
       // TODO check response status
-      onLogOut();
+      navigate("/landing");
     } catch (error) {
       console.error(error);
     }
