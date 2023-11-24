@@ -47,29 +47,29 @@ function HomePage({}) {
     }
   };
   return (
-    <div>
-      <h1> Home </h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Enter URL:
+    <div className="home-container">
+      <div className="top-center-container">
+        <form onSubmit={handleSubmit}>
           <input
+            className="url-input"
             type="text"
+            placeholder="Add link to a blogpost."
             value={url}
             onChange={(e) => setUrl(e.target.value)}
           />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-      <button onClick={handleLogOut}> Logout</button>
-      {audio ? <AudioJustListen audio={audio} /> : <div> no file yet </div>}
-      <div>
-        <h2>My Library</h2>
+          {/* <button type="submit">Generate URL</button> */}
+        </form>
+        {audio ? <AudioJustListen audio={audio} /> : <div> no file yet </div>}
+      </div>
+
+      <div className="library-container">
+        <div className="library-title">Your Library </div>
         <div>
           {audioLibrary.length > 0 ? (
             <ul>
               {audioLibrary.map((audio, index) => (
                 <li key={index}>
-                  <h3>{audio.title}</h3>
+                  <div className="audio-title">{audio.title}</div>
                   <AudioJustListen audio={audio.url} />
                 </li>
               ))}
@@ -78,9 +78,10 @@ function HomePage({}) {
             <div>No audio files in the library yet.</div>
           )}
         </div>
+        <button onClick={handleLogOut}> Logout</button>
       </div>
     </div>
   );
 }
 
-export default InputForm;
+export default HomePage;
