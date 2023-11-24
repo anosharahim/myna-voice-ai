@@ -61,7 +61,7 @@ export default function SignUpForm() {
           </div>
 
           <button onClick={handleSubmit} className="signup-button">
-            Login
+            Create Account
           </button>
 
           <p className="login-link-text">

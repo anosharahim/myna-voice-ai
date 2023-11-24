@@ -38,36 +38,39 @@ export default function SignUpForm({ onAuthentication }) {
     }
   };
   return (
-    <div className="form">
-      <div>
-        <h1>Welcome Back</h1>
+    <div className="signup-container">
+      <div className="form">
+        <div className="signup-title">Welcome Back</div>
+        <form>
+          {/* Labels and inputs for form data */}
+          <div classname="input-field">
+            <label className="label">Username</label>
+            <input
+              onChange={handleName}
+              className="input"
+              value={name}
+              type="text"
+            />
+          </div>
+          <div className="input-field">
+            <label className="label">Password</label>
+            <input
+              onChange={handlePassword}
+              className="input"
+              value={password}
+              type="password"
+            />
+          </div>
+
+          <button onClick={handleSubmit} className="signup-button">
+            Login
+          </button>
+
+          <p className="login-link-text">
+            Don't have an account? <a href="/signup">Sign up here</a>.
+          </p>
+        </form>
       </div>
-      <form>
-        {/* Labels and inputs for form data */}
-        <label className="label">Name</label>
-        <input
-          onChange={handleName}
-          className="input"
-          value={name}
-          type="text"
-        />
-
-        <label className="label">Password</label>
-        <input
-          onChange={handlePassword}
-          className="input"
-          value={password}
-          type="password"
-        />
-
-        <button onClick={handleSubmit} className="btn" type="submit">
-          Submit
-        </button>
-
-        <p className="signup-link-text">
-          Don't have an account? <a href="/signup">Sign up here.</a>.
-        </p>
-      </form>
     </div>
   );
 }
