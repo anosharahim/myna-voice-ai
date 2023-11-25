@@ -57,16 +57,29 @@ button:hover {
 
 /* Sign Up Form*/
 
-.signup-container {
+.sign-container {
   background-color: #fface4;
 }
 
-.signup-title {
+.sign-title {
   color: #4daa57;
   font-weight: 800;
   font-size: 50px;
   -webkit-text-stroke: 1px #000;
   margin-bottom: 30px;
+}
+
+.sign-button {
+  background-color: #f5e960;
+  color: black;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: 1px solid #000;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  font-weight: 600;
 }
 
 .form {
@@ -94,19 +107,6 @@ button:hover {
   margin: 20px 0px;
 }
 
-.signup-button {
-  background-color: #f5e960;
-  color: black;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: 1px solid #000;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-  font-weight: 600;
-}
-
 /* Home Page */
 
 .library-title {
@@ -132,10 +132,19 @@ button:hover {
 .url-input {
   width: 300px;
   height: 40px;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   padding: 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #000;
 }
 
 .audio-title {
   font-size: 15px;
+}
+
+/* Style for the audio element */
+
+audio::-webkit-media-controls-panel {
+  background-color: pink;
 }

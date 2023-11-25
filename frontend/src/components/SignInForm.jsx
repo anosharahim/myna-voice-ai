@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-export default function SignUpForm({ onAuthentication }) {
+export default function SignInForm({ onAuthentication }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -38,9 +38,9 @@ export default function SignUpForm({ onAuthentication }) {
     }
   };
   return (
-    <div className="signup-container">
+    <div className="sign-container">
       <div className="form">
-        <div className="signup-title">Welcome Back</div>
+        <div className="sign-title">Welcome Back</div>
         <form>
           {/* Labels and inputs for form data */}
           <div classname="input-field">
@@ -62,7 +62,7 @@ export default function SignUpForm({ onAuthentication }) {
             />
           </div>
 
-          <button onClick={handleSubmit} className="signup-button">
+          <button onClick={handleSubmit} className="sign-button">
             Login
           </button>
 

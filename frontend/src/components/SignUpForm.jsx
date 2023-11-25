@@ -36,9 +36,9 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className="signup-container">
+    <div className="sign-container">
       <div className="form">
-        <div className="signup-title">Sign Up</div>
+        <div className="sign-title">Sign Up</div>
         <form>
           {/* Labels and inputs for form data */}
           <div classname="input-field">
@@ -60,7 +60,7 @@ export default function SignUpForm() {
             />
           </div>
 
-          <button onClick={handleSubmit} className="signup-button">
+          <button onClick={handleSubmit} className="sign-button">
             Create Account
           </button>
 
