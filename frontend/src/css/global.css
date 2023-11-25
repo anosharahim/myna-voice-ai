@@ -92,7 +92,7 @@ button:hover {
   border-radius: 8px;
 }
 
-.input {
+.sign-input {
   width: 100%;
   padding: 8px;
   margin-bottom: 16px;
@@ -103,7 +103,7 @@ button:hover {
   outline: none;
 }
 
-.input-field {
+.sign-input-field {
   margin: 20px 0px;
 }
 

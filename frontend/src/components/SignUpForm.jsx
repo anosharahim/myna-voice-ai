@@ -41,20 +41,20 @@ export default function SignUpForm() {
         <div className="sign-title">Sign Up</div>
         <form>
           {/* Labels and inputs for form data */}
-          <div classname="input-field">
+          <div classname="sign-input-field">
             <label className="label">Username</label>
             <input
               onChange={handleName}
-              className="input"
+              className="sign-input"
               value={name}
               type="text"
             />
           </div>
-          <div className="input-field">
+          <div className="sign-input-field">
             <label className="label">Create Password</label>
             <input
               onChange={handlePassword}
-              className="input"
+              className="sign-input"
               value={password}
               type="password"
             />
