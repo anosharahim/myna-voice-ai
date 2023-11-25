@@ -39,7 +39,7 @@ export default function SignInForm({ onAuthentication }) {
   };
   return (
     <div className="sign-container">
-      <div className="form">
+      <div className="sign-form">
         <div className="sign-title">Welcome Back</div>
         <form>
           {/* Labels and inputs for form data */}

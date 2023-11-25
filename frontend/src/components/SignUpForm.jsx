@@ -37,7 +37,7 @@ export default function SignUpForm() {
 
   return (
     <div className="sign-container">
-      <div className="form">
+      <div className="sign-form">
         <div className="sign-title">Sign Up</div>
         <form>
           {/* Labels and inputs for form data */}
