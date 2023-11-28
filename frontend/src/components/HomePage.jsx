@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AudioListenAndRespond from "./AudioListenAndRespond";
 import AudioJustListen from "./AudioJustListen";
+import AudioPlayer from "./AudioPlayer";
 import Header from "./Header";
 import "../css/library.css";
 
@@ -84,7 +85,9 @@ function HomePage({}) {
           )}
           {!audio && (
             <div>
-              <button onClick={handleSubmit}>Generate Audio</button>
+              <button onClick={handleSubmit} className="global-button">
+                Generate Audio
+              </button>
             </div>
           )}
           {audioMessage && <div>{audioMessage}</div>}
@@ -122,8 +125,12 @@ function HomePage({}) {
               <div>No audio files in the library yet.</div>
             )}
           </div>
-          <button onClick={handleLogOut}> Logout</button>
+          <button onClick={handleLogOut} className="global-button">
+            {" "}
+            Logout
+          </button>
         </div>
+        <AudioPlayer />
       </div>
     </div>
   );

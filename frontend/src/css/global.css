@@ -22,7 +22,7 @@ Light green: #edffec
 Yellow: f5e960
 */
 
-button {
+.global-button {
   background-color: #fface4;
   /* color: black; */
   padding: 14px 20px;
@@ -33,6 +33,17 @@ button {
   border: none;
   /* width: 20%; */
   /* opacity: 0.9; */
+}
+
+.circular-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #464655;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
 }
 
 button:hover {

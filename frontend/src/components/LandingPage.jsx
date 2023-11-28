@@ -16,7 +16,9 @@ const LandingPage = () => {
         <div className="landing-page-tagline">
           Transform any blog into a podcast that you can talk to.
         </div>
-        <button onClick={handleGetStarted}>Get Started</button>
+        <button onClick={handleGetStarted} className="global-button">
+          Get Started
+        </button>
       </div>
     </div>
   );
