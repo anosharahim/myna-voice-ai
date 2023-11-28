@@ -49,3 +49,62 @@
   height: 25px;
   transform: rotate(180deg);
 }
+
+.slider {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 12px;
+}
+
+.slider-with-time {
+  display: flex;
+  // align-items: center;
+  justify-content: center;
+  width: 70%;
+  font-size: 12px;
+  margin: 0 auto;
+}
+
+.start-time {
+  margin-top: 2px; /* Adjust the margin as needed */
+}
+.end-time {
+  margin-top: 2px; /* Adjust the margin as needed */
+  // margin-right: 50px;
+}
+
+.slider-thin-line,
+.slider-circle,
+.slider-thick-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  // height: 100%;
+}
+
+.slider-circle {
+  @include base-button();
+  background-image: url("../../public/little-circle.png");
+  width: 10px;
+  height: 12px;
+  margin-top: 4px;
+}
+
+.slider-thin-line {
+  border-top: 1px solid #000;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.slider-thick-line {
+  // TODO: make edges rounded (border radius doesn't work)
+  border-top: 5px solid #000;
+  border-radius: 20px;
+  width: 30%;
+  margin-top: 8px;
+}
