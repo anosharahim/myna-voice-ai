@@ -49,6 +49,7 @@ function HomePage({}) {
   return (
     <div className="home-container">
       <div className="top-center-container">
+        <div className="home-title"> Start Listening Now </div>
         <form onSubmit={handleSubmit}>
           <input
             className="url-input"
