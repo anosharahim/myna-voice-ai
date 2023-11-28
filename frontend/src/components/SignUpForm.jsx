@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import Header from "./Header";
 
 export default function SignUpForm() {
   const [name, setName] = useState("");
@@ -36,38 +37,41 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className="sign-container">
-      <div className="sign-form">
-        <div className="sign-title">Sign Up</div>
-        <form>
-          {/* Labels and inputs for form data */}
-          <div classname="sign-input-field">
-            <label className="label">Username</label>
-            <input
-              onChange={handleName}
-              className="sign-input"
-              value={name}
-              type="text"
-            />
-          </div>
-          <div className="sign-input-field">
-            <label className="label">Create Password</label>
-            <input
-              onChange={handlePassword}
-              className="sign-input"
-              value={password}
-              type="password"
-            />
-          </div>
+    <div>
+      <Header />
+      <div className="sign-container">
+        <div className="sign-form">
+          <div className="sign-title">Sign Up</div>
+          <form>
+            {/* Labels and inputs for form data */}
+            <div classname="sign-input-field">
+              <label className="label">Username</label>
+              <input
+                onChange={handleName}
+                className="sign-input"
+                value={name}
+                type="text"
+              />
+            </div>
+            <div className="sign-input-field">
+              <label className="label">Create Password</label>
+              <input
+                onChange={handlePassword}
+                className="sign-input"
+                value={password}
+                type="password"
+              />
+            </div>
 
-          <button onClick={handleSubmit} className="sign-button">
-            Create Account
-          </button>
+            <button onClick={handleSubmit} className="sign-button">
+              Create Account
+            </button>
 
-          <p className="login-link-text">
-            Already have an account? <a href="/login">Log in here</a>.
-          </p>
-        </form>
+            <p className="login-link-text">
+              Already have an account? <a href="/login">Log in here</a>.
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );
