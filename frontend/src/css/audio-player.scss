@@ -1,9 +1,24 @@
 .audio-pop-up {
   height: 10vh;
-  background-color: pink;
+  background-color: #fface4;
   padding-top: 30px;
   padding-bottom: 20px;
+  justify-content: space-around;
+  display: flex;
 }
+
+.audio-center-controls {
+  width: 50vh;
+}
+
+.curr-audio-title {
+  width: 15vh;
+  font-weight: 700;
+  font-size: 15px;
+  // color: darkslategrey;
+}
+
+// Play Controls Styling
 
 @mixin base-button {
   background-size: cover;
@@ -13,7 +28,7 @@
 }
 
 .play-controls {
-  width: 20%;
+  width: 20vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -50,8 +65,10 @@
   transform: rotate(180deg);
 }
 
+//  Slider Styling
+
 .slider {
-  width: 60%;
+  width: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,9 +79,7 @@
 
 .slider-with-time {
   display: flex;
-  // align-items: center;
   justify-content: center;
-  width: 70%;
   font-size: 12px;
   margin: 0 auto;
 }
@@ -74,7 +89,6 @@
 }
 .end-time {
   margin-top: 2px; /* Adjust the margin as needed */
-  // margin-right: 50px;
 }
 
 .slider-thin-line,
@@ -84,7 +98,6 @@
   top: 0;
   left: 0;
   width: 100%;
-  // height: 100%;
 }
 
 .slider-circle {
@@ -102,9 +115,47 @@
 }
 
 .slider-thick-line {
-  // TODO: make edges rounded (border radius doesn't work)
   border-top: 5px solid #000;
   border-radius: 20px;
   width: 30%;
   margin-top: 8px;
+}
+
+// Volume Controls
+
+.volume {
+  width: 15vh;
+  display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+}
+
+.volume-slider {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  justify-content: center;
+  position: relative;
+  // margin: 0 12px;
+}
+
+.volume-button {
+  @include base-button();
+  background-image: url("../../public/volume.png");
+  width: 15px;
+  height: 15px;
+  margin-top: 32px;
+  margin-right: 5px;
+}
+
+.volume-thin-line {
+  border-top: 1px solid #000;
+}
+
+.volume-thick-line {
+  border-top: 3px solid #000;
+  width: 30%;
+  margin-top: -2px;
+  border-radius: 2px;
 }
