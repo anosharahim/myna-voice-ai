@@ -5,7 +5,7 @@ function AudioJustListen({ audio }) {
   return (
     <div>
       {" "}
-      <div>
+      <div style={{ display: "none" }}>
         <audio controls src={audio}></audio>
       </div>
     </div>
