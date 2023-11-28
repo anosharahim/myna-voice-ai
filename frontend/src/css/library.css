@@ -1,0 +1,36 @@
+.library-title {
+  color: #000;
+  font-weight: 800;
+  font-size: 30px;
+  /* -webkit-text-stroke: 1px #000; */
+  margin-bottom: 50px;
+}
+
+.library-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 800px;
+  margin: 0 auto;
+}
+
+.table-container {
+  width: 100%;
+  text-align: left;
+}
+
+.table-head {
+  display: flex;
+}
+
+.column-name {
+  font-size: 14px;
+  color: darkolivegreen;
+}
+
+.horizontal-line {
+  border-top: 1px solid #000; /* Customize the color and thickness */
+  width: 100%;
+  margin: 10px auto;
+}
