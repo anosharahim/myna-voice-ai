@@ -114,9 +114,20 @@ function HomePage({}) {
     </div>
   );
 }
+
 function LibraryItem({ index, title, url, onClick }) {
   // TODO: Use react ref to get audio element
-  // TODO: Get duration from element
+  const audioRef = useRef(null);
+  const [totalDuration, setTotalDuration] = useState("00:00");
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.addEventListener("loadedmetadata", () => {
+        const durationInSeconds = audioRef.current.duration;
+
+        setTotalDuration(formatTime(durationInSeconds));
+      });
+    }
+  }, []);
   return (
     <div className="library-item" onClick={onClick}>
       <div
@@ -135,20 +146,12 @@ function LibraryItem({ index, title, url, onClick }) {
       >
         {title}
       </div>
-      <div style={{ fontWeight: "300", fontSize: "8" }}>00.00</div>
-      {/* <div>listen-only</div> */}
+      <div style={{ fontWeight: "300", fontSize: "8" }}>{totalDuration}</div>
       <div style={{ display: "none" }}>
-        <audio src={url} />
+        <audio ref={audioRef} src={url} />
       </div>
     </div>
   );
 }
 
 export default HomePage;
-
-{
-  /* 
-<div>
-  
-</div> */
-}
