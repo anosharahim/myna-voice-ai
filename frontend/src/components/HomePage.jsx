@@ -4,6 +4,7 @@ import axios from "axios";
 import AudioListenAndRespond from "./AudioListenAndRespond";
 import AudioJustListen from "./AudioJustListen";
 import Header from "./Header";
+import "../css/library.css";
 
 function HomePage({}) {
   const [url, setUrl] = useState("");
@@ -91,20 +92,26 @@ function HomePage({}) {
 
         <div className="library-container">
           <div className="library-title">Your Library </div>
-          <div>
-            {audioLibrary.length > 0 ? (
-              <ul>
-                {audioLibrary.map((audio, index) => (
-                  <li key={index}>
-                    <div className="audio-title">{audio.title}</div>
-                    <AudioJustListen audio={audio.url} />
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div>No audio files in the library yet.</div>
-            )}
+          <div className="table-container">
+            <div className="table-head">
+              <div className="column-name" style={{ width: "10%" }}>
+                #
+              </div>
+              <div className="column-name" style={{ width: "50%" }}>
+                Title{" "}
+              </div>
+              <div className="column-name" style={{ width: "20%" }}>
+                {" "}
+                Duration
+              </div>
+              <div className="column-name" style={{ width: "20%" }}>
+                {" "}
+                Mode
+              </div>
+            </div>
+            <div className="horizontal-line"></div>
           </div>
+
           <button onClick={handleLogOut}> Logout</button>
         </div>
       </div>
@@ -113,3 +120,21 @@ function HomePage({}) {
 }
 
 export default HomePage;
+
+{
+  /* 
+<div>
+  {audioLibrary.length > 0 ? (
+    <ul>
+      {audioLibrary.map((audio, index) => (
+        <li key={index}>
+          <div className="audio-title">{audio.title}</div>
+          <AudioJustListen audio={audio.url} />
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div>No audio files in the library yet.</div>
+  )}
+</div> */
+}
