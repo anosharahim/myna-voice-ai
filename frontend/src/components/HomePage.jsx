@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AudioListenAndRespond from "./AudioListenAndRespond";
 import AudioJustListen from "./AudioJustListen";
+import Header from "./Header";
 
 function HomePage({}) {
   const [url, setUrl] = useState("");
   const [audio, setAudio] = useState("");
   const [audioLibrary, setAudioLibrary] = useState([]);
+  const [audioMessage, setAudioMessage] = useState("");
   const navigate = useNavigate();
 
   //Fetch the user's audio library when the component mounts
@@ -25,14 +27,26 @@ function HomePage({}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (url.trim() === "") {
+      setAudioMessage("Please enter a valid URL.");
+      setTimeout(() => setAudioMessage(""), 5000);
+      return;
+    }
     try {
       const response = await axios.post("/search-view/", {
         url,
       });
       setAudio(`/${response.data.audio_url}`);
+      if (audio) {
+        setAudioMessage("");
+      } else {
+        setAudioMessage("Failed to generate audio.");
+      }
     } catch (error) {
       console.error(error);
       setAudio("Error occurred while sending the URL.");
+      setAudioMessage("Error ocurred");
     }
   };
 
