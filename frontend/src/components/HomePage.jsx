@@ -149,17 +149,6 @@ export default HomePage;
 {
   /* 
 <div>
-  {audioLibrary.length > 0 ? (
-    <ul>
-      {audioLibrary.map((audio, index) => (
-        <li key={index}>
-          <div className="audio-title">{audio.title}</div>
-          <AudioJustListen audio={audio.url} />
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <div>No audio files in the library yet.</div>
-  )}
+  
 </div> */
 }
