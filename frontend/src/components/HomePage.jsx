@@ -128,6 +128,13 @@ function LibraryItem({ index, title, url, onClick }) {
       });
     }
   }, []);
+  const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+    return `${formattedMinutes}:${formattedSeconds}`;
+  };
   return (
     <div className="library-item" onClick={onClick}>
       <div
