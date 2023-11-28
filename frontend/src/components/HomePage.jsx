@@ -59,7 +59,14 @@ function HomePage({}) {
           />
           {/* <button type="submit">Generate URL</button> */}
         </form>
-        {audio ? <AudioJustListen audio={audio} /> : <div> no file yet </div>}
+        {audio ? (
+          <AudioJustListen audio={audio} />
+        ) : (
+          <div>
+            {" "}
+            <button onClick={handleSubmit}> Generate Audio</button>
+          </div>
+        )}
       </div>
 
       <div className="library-container">
