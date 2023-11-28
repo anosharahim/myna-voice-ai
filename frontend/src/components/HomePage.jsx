@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AudioListenAndRespond from "./AudioListenAndRespond";
@@ -107,7 +107,21 @@ function HomePage({}) {
             </div>
             <div className="horizontal-line"></div>
           </div>
-
+          <div className="library-items">
+            {audioLibrary.length > 0 ? (
+              audioLibrary.map((audio, index) => (
+                <LibraryItem
+                  key={audio.url}
+                  index={index}
+                  title={audio.title}
+                  url={audio.url}
+                  onClick={() => console.log("Clicked on item", index)}
+                />
+              ))
+            ) : (
+              <div>No audio files in the library yet.</div>
+            )}
+          </div>
           <button onClick={handleLogOut}> Logout</button>
         </div>
       </div>
@@ -128,6 +142,7 @@ function LibraryItem({ index, title, url, onClick }) {
       });
     }
   }, []);
+
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
@@ -135,6 +150,7 @@ function LibraryItem({ index, title, url, onClick }) {
     const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
     return `${formattedMinutes}:${formattedSeconds}`;
   };
+
   return (
     <div className="library-item" onClick={onClick}>
       <div
