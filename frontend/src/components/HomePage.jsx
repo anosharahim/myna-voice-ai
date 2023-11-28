@@ -64,46 +64,48 @@ function HomePage({}) {
     <div>
       {" "}
       <Header />
-    <div className="home-container">
-      <div className="top-center-container">
-        <div className="home-title"> Start Listening Now </div>
-        <form onSubmit={handleSubmit}>
-          <input
-            className="url-input"
-            type="text"
-            placeholder="Add link to a blogpost."
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
-          {/* <button type="submit">Generate URL</button> */}
-        </form>
-        {audio ? (
-          <AudioJustListen audio={audio} />
-        ) : (
-          <div>
-            {" "}
-            <button onClick={handleSubmit}> Generate Audio</button>
-          </div>
-        )}
-      </div>
-
-      <div className="library-container">
-        <div className="library-title">Your Library </div>
-        <div>
-          {audioLibrary.length > 0 ? (
-            <ul>
-              {audioLibrary.map((audio, index) => (
-                <li key={index}>
-                  <div className="audio-title">{audio.title}</div>
-                  <AudioJustListen audio={audio.url} />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div>No audio files in the library yet.</div>
+      <div className="home-container">
+        <div className="top-center-container">
+          <div className="home-title"> Start Listening Now </div>
+          <form onSubmit={handleSubmit}>
+            <input
+              className="url-input"
+              type="text"
+              placeholder="Add link to a blogpost."
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+            />
+          </form>
+          {audio && (
+            <div>
+              <AudioJustListen audio={audio} />
+            </div>
           )}
+          {!audio && (
+            <div>
+              <button onClick={handleSubmit}>Generate Audio</button>
+            </div>
+          )}
+          {audioMessage && <div>{audioMessage}</div>}
         </div>
-        <button onClick={handleLogOut}> Logout</button>
+
+        <div className="library-container">
+          <div className="library-title">Your Library </div>
+          <div>
+            {audioLibrary.length > 0 ? (
+              <ul>
+                {audioLibrary.map((audio, index) => (
+                  <li key={index}>
+                    <div className="audio-title">{audio.title}</div>
+                    <AudioJustListen audio={audio.url} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div>No audio files in the library yet.</div>
+            )}
+          </div>
+          <button onClick={handleLogOut}> Logout</button>
         </div>
       </div>
     </div>
