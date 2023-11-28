@@ -94,20 +94,16 @@ function HomePage({}) {
           <div className="library-title">Your Library </div>
           <div className="table-container">
             <div className="table-head">
-              <div className="column-name" style={{ width: "10%" }}>
+              <div
+                className="column-name"
+                style={{ width: "100px", paddingLeft: "15px" }}
+              >
                 #
               </div>
-              <div className="column-name" style={{ width: "50%" }}>
+              <div className="column-name" style={{ width: "700px" }}>
                 Title{" "}
               </div>
-              <div className="column-name" style={{ width: "20%" }}>
-                {" "}
-                Duration
-              </div>
-              <div className="column-name" style={{ width: "20%" }}>
-                {" "}
-                Mode
-              </div>
+              <div className="column-name"> Duration</div>
             </div>
             <div className="horizontal-line"></div>
           </div>
