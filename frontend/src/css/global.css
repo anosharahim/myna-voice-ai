@@ -160,7 +160,7 @@ button:hover {
   align-items: center;
   justify-content: center;
   height: 30vh;
-  margin-bottom: 64px;
+  margin-bottom: 120px;
   /* margin: 64px 0px; */
 }
 
@@ -173,18 +173,6 @@ button:hover {
   border: 1px solid #000;
   /* border-bottom: 1px solid #000; */
   margin-bottom: 20px;
-}
-
-.library-title {
-  color: #000;
-  font-weight: 800;
-  font-size: 30px;
-  /* -webkit-text-stroke: 1px #000; */
-  margin-bottom: 30px;
-}
-
-.library-container {
-  text-align: center;
 }
 
 .audio-title {
