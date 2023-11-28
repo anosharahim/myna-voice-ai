@@ -19,6 +19,15 @@ const AudioPlayer = () => {
         ></button>
         <button className="fastforward-button"></button>
       </div>
+      <div className="slider-with-time">
+        <div className="start-time">00.00</div>
+        <div className="slider">
+          <button className="slider-circle"></button>
+          <div className="slider-thin-line"></div>
+          <div className="slider-thick-line"></div>
+        </div>
+        <div className="end-time">00.00</div>
+      </div>
     </div>
   );
 };
