@@ -17,15 +17,16 @@ Yellow: f5e960
 */
 
 button {
-  background-color: #f5e960;
-  color: black;
+  background-color: #fface4;
+  /* color: black; */
   padding: 14px 20px;
   margin: 8px 0;
-  border: 1px solid #000; /* Border width and color */
+  /* border: 1px solid #000; */
   border-radius: 10px;
   cursor: pointer;
+  border: none;
   /* width: 20%; */
-  opacity: 0.9;
+  /* opacity: 0.9; */
 }
 
 button:hover {
@@ -35,15 +36,15 @@ button:hover {
 /* Landing Page Styling*/
 .landing-page-container {
   padding: 200px;
-  background-color: #4daa57;
+  background-color: #edffec;
   min-height: 100vh;
 }
 
 .landing-page-tagline {
-  font-size: 80px;
+  font-size: 60px;
   font-weight: 800;
-  color: #fface4;
-  -webkit-text-stroke: 1px #000; /* text outline border */
+  color: #4daa57;
+  /* -webkit-text-stroke: 1px #000;*/
   margin-bottom: 50px;
 }
 
@@ -66,14 +67,14 @@ button:hover {
 /* Sign Up Form*/
 
 .sign-container {
-  background-color: #fface4;
+  background-color: #edffec;
 }
 
 .sign-title {
   color: #4daa57;
   font-weight: 800;
   font-size: 50px;
-  -webkit-text-stroke: 1px #000;
+  /* -webkit-text-stroke: 1px #000; */
   margin-bottom: 30px;
 }
 
