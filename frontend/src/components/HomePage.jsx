@@ -12,6 +12,7 @@ function HomePage({}) {
   const [audio, setAudio] = useState("");
   const [audioLibrary, setAudioLibrary] = useState([]);
   const [audioMessage, setAudioMessage] = useState("");
+
   const navigate = useNavigate();
 
   //Fetch the user's audio library when the component mounts
@@ -140,6 +141,16 @@ function LibraryItem({ index, title, url, onClick }) {
   // TODO: Use react ref to get audio element
   const audioRef = useRef(null);
   const [totalDuration, setTotalDuration] = useState("00:00");
+
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const handleHover = (index) => {
+    setHoveredIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredIndex(null);
+  };
+
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.addEventListener("loadedmetadata", () => {
@@ -159,17 +170,22 @@ function LibraryItem({ index, title, url, onClick }) {
   };
 
   return (
-    <div className="library-item" onClick={onClick}>
-      <div
-        style={{
-          width: "100px",
-          fontWeight: "300",
-          fontSize: "10",
-          paddingLeft: "15px",
-        }}
-      >
-        {index + 1}.
+    <div
+      className="library-item"
+      onClick={onClick}
+      onMouseEnter={() => handleHover(index)}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div key={index} className="lib-item">
+        <div className="lib-item-index">
+          {hoveredIndex === index ? (
+            <div className="play-icon"></div>
+          ) : (
+            <div className="lib-index">{index + 1}.</div>
+          )}
+        </div>
       </div>
+
       <div
         className="audio-title"
         style={{ width: "700px", fontWeight: "600" }}
