@@ -11,6 +11,14 @@ const AudioPlayer = () => {
 
   return (
     <div className="audio-pop-up">
+      <div className="play-controls">
+        <button className="rewind-button"></button>
+        <button
+          className={isPlaying ? "pause-button" : "play-button"}
+          onClick={togglePlay}
+        ></button>
+        <button className="fastforward-button"></button>
+      </div>
     </div>
   );
 };
