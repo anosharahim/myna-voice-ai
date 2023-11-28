@@ -156,3 +156,23 @@ button:hover {
 audio::-webkit-media-controls-panel {
   background-color: pink;
 }
+
+audio::-webkit-media-controls-play-button {
+  background-color: #b1d4e0;
+  border-radius: 50%;
+}
+
+audio::-webkit-media-controls-play-button:hover {
+  background-color: rgba(177, 212, 224, 0.7);
+}
+
+audio::-webkit-media-controls-current-time-display {
+  color: #fff;
+}
+
+audio::-webkit-media-controls-volume-slider {
+  background-color: #b1d4e0;
+  border-radius: 25px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
