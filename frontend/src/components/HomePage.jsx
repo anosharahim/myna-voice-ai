@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import AudioListenAndRespond from "./AudioListenAndRespond";
-import AudioJustListen from "./AudioJustListen";
 import AudioPlayer from "./AudioPlayer";
 import Header from "./Header";
 import "../css/library.css";
@@ -12,6 +10,7 @@ function HomePage({}) {
   const [audio, setAudio] = useState("");
   const [audioLibrary, setAudioLibrary] = useState([]);
   const [audioMessage, setAudioMessage] = useState("");
+  const [audioVisibleInPlayer, setAudioVisibleInPlayer] = useState(null);
 
   const navigate = useNavigate();
 
@@ -63,6 +62,7 @@ function HomePage({}) {
       console.error(error);
     }
   };
+
   return (
     <div>
       {" "}
@@ -79,11 +79,6 @@ function HomePage({}) {
               onChange={(e) => setUrl(e.target.value)}
             />
           </form>
-          {audio && (
-            <div>
-              <AudioJustListen audio={audio} />
-            </div>
-          )}
           {!audio && (
             <div>
               <button onClick={handleSubmit} className="global-button">
@@ -119,7 +114,13 @@ function HomePage({}) {
                   index={index}
                   title={audio.title}
                   url={audio.url}
-                  onClick={() => console.log("Clicked on item", index)}
+                  onClick={() => {
+                    // if (audioVisibleInPlayer === audio) {
+                    // setAudioVisibleInPlayer(null);
+                    // } else {
+                    setAudioVisibleInPlayer(audio);
+                    // }
+                  }}
                 />
               ))
             ) : (
@@ -131,14 +132,13 @@ function HomePage({}) {
             Logout
           </button>
         </div>
-        <AudioPlayer />
+        {audioVisibleInPlayer && <AudioPlayer audio={audioVisibleInPlayer} />}
       </div>
     </div>
   );
 }
 
 function LibraryItem({ index, title, url, onClick }) {
-  // TODO: Use react ref to get audio element
   const audioRef = useRef(null);
   const [totalDuration, setTotalDuration] = useState("00:00");
 
