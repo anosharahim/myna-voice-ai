@@ -1,17 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../css/audio-player.scss";
 
-const AudioPlayer = () => {
+const AudioPlayer = ({ audio, totalDuration }) => {
   const [isPlaying, setPlaying] = useState(false);
+  const ref = useRef(null);
+
+  // states
+  const [duration, setDuration] = React.useState(0);
 
   const togglePlay = () => {
-    setPlaying(!isPlaying);
-    // Add logic to handle play/pause actions
+    if (isPlaying) {
+      ref?.current.pause();
+      setPlaying(false);
+    } else {
+      ref?.current.play();
+      setPlaying(true);
+    }
   };
 
   return (
     <div className="audio-pop-up">
-      <div className="curr-audio-title">1. This is an audio title</div>
+      <audio
+        ref={ref}
+        src={audio.url}
+        style={{ display: "none" }}
+        onDurationChange={(e) => setDuration(e.currentTarget.duration)}
+        onPlaying={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+      />
+      {/* 1. When ref changes, get the duration and set it to component state */}
+      {/* 2. Similarly for progress / start time */}
+      {/* 3. Clicking on play/pause should play/pause on the audio ref */}
+      {/* 4. Copy effect code from AudioListenAndRespond to this file */}
+      <div className="curr-audio-title">1. {audio.title}</div>
       <div className="audio-center-controls">
         <div className="play-controls">
           <button className="rewind-button"></button>
