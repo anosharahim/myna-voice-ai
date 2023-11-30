@@ -114,12 +114,14 @@ function HomePage({}) {
                   index={index}
                   title={audio.title}
                   url={audio.url}
+                  isPlaying={audio === audioVisibleInPlayer && isAudioPlaying}
                   onClick={() => {
-                    // if (audioVisibleInPlayer === audio) {
-                    // setAudioVisibleInPlayer(null);
-                    // } else {
+                    if (audio === audioVisibleInPlayer && isAudioPlaying) {
+                      setIsAudioPlaying(false);
+                    } else {
                     setAudioVisibleInPlayer(audio);
-                    // }
+                      setIsAudioPlaying(true);
+                    }
                   }}
                 />
               ))
@@ -132,7 +134,13 @@ function HomePage({}) {
             Logout
           </button>
         </div>
-        {audioVisibleInPlayer && <AudioPlayer audio={audioVisibleInPlayer} />}
+        {audioVisibleInPlayer && (
+          <AudioPlayer
+            audio={audioVisibleInPlayer}
+            isAudioPlaying={isAudioPlaying}
+            setIsAudioPlaying={setIsAudioPlaying}
+          />
+        )}
       </div>
     </div>
   );
