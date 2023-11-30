@@ -8,14 +8,23 @@ const AudioPlayer = ({ audio, isAudioPlaying, setIsAudioPlaying }) => {
   const [duration, setDuration] = React.useState(0);
 
   const togglePlay = () => {
-    if (isPlaying) {
-      ref?.current.pause();
-      setPlaying(false);
+    if (isAudioPlaying) {
+      setIsAudioPlaying(false);
     } else {
-      ref?.current.play();
-      setPlaying(true);
+      setIsAudioPlaying(true);
     }
   };
+
+  useEffect(() => {
+    if (isAudioPlaying) {
+      ref?.current.play();
+    } else {
+      ref?.current.pause();
+    }
+  }, [isAudioPlaying]);
+
+  // When you click on item 1, audio is that of 1
+  // when you click on item 2, audio 1 needs to be paused, and audio 2 needs to be played
 
   return (
     <div className="audio-pop-up">
@@ -24,8 +33,8 @@ const AudioPlayer = ({ audio, isAudioPlaying, setIsAudioPlaying }) => {
         src={audio.url}
         style={{ display: "none" }}
         onDurationChange={(e) => setDuration(e.currentTarget.duration)}
-        onPlaying={() => setPlaying(true)}
-        onPause={() => setPlaying(false)}
+        // onPlaying={() => setIsAudioPlaying(true)}
+        // onPause={() => setIsAudioPlaying(false)}
       />
       {/* 1. When ref changes, get the duration and set it to component state */}
       {/* 2. Similarly for progress / start time */}
@@ -36,7 +45,7 @@ const AudioPlayer = ({ audio, isAudioPlaying, setIsAudioPlaying }) => {
         <div className="play-controls">
           <button className="rewind-button"></button>
           <button
-            className={isPlaying ? "pause-button" : "play-button"}
+            className={isAudioPlaying ? "pause-button" : "play-button"}
             onClick={togglePlay}
           ></button>
           <button className="fastforward-button"></button>
