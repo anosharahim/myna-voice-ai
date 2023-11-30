@@ -187,7 +187,11 @@ function LibraryItem({ index, title, url, onClick }) {
       <div key={index} className="lib-item">
         <div className="lib-item-index">
           {hoveredIndex === index ? (
+            isPlaying ? (
+              <div className="pause-button"></div>
+            ) : (
             <div className="play-icon"></div>
+            )
           ) : (
             <div className="lib-index">{index + 1}.</div>
           )}
