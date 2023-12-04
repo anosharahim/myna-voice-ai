@@ -5,12 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Runserver",
-      "type": "python",
+      "name": "Launch Chrome",
       "request": "launch",
-      "program": "${workspaceFolder}/backend/manage.py",
-      "args": ["runserver", "localhost:8000"],
-      "django": true
+      "type": "chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/src"
     }
+    // {
+    //   "name": "Runserver",
+    //   "type": "python",
+    //   "request": "launch",
+    //   "program": "${workspaceFolder}/backend/manage.py",
+    //   "args": ["runserver", "localhost:8000"],
+    //   "django": true
+    // }
   ]
 }
