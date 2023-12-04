@@ -11,6 +11,7 @@ function HomePage({}) {
   const [audioLibrary, setAudioLibrary] = useState([]);
   const [audioMessage, setAudioMessage] = useState("");
   const [audioVisibleInPlayer, setAudioVisibleInPlayer] = useState(null);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
   const navigate = useNavigate();
 
@@ -119,7 +120,7 @@ function HomePage({}) {
                     if (audio === audioVisibleInPlayer && isAudioPlaying) {
                       setIsAudioPlaying(false);
                     } else {
-                    setAudioVisibleInPlayer(audio);
+                      setAudioVisibleInPlayer(audio);
                       setIsAudioPlaying(true);
                     }
                   }}
@@ -146,7 +147,7 @@ function HomePage({}) {
   );
 }
 
-function LibraryItem({ index, title, url, onClick }) {
+function LibraryItem({ index, title, url, onClick, isPlaying }) {
   const audioRef = useRef(null);
   const [totalDuration, setTotalDuration] = useState("00:00");
 
@@ -190,7 +191,7 @@ function LibraryItem({ index, title, url, onClick }) {
             isPlaying ? (
               <div className="pause-button"></div>
             ) : (
-            <div className="play-icon"></div>
+              <div className="play-icon"></div>
             )
           ) : (
             <div className="lib-index">{index + 1}.</div>
