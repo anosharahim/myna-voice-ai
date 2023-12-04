@@ -150,8 +150,8 @@ function HomePage({}) {
 function LibraryItem({ index, title, url, onClick, isPlaying }) {
   const audioRef = useRef(null);
   const [totalDuration, setTotalDuration] = useState("00:00");
-
   const [hoveredIndex, setHoveredIndex] = useState(null);
+
   const handleHover = (index) => {
     setHoveredIndex(index);
   };
@@ -164,7 +164,6 @@ function LibraryItem({ index, title, url, onClick, isPlaying }) {
     if (audioRef.current) {
       audioRef.current.addEventListener("loadedmetadata", () => {
         const durationInSeconds = audioRef.current.duration;
-
         setTotalDuration(formatTime(durationInSeconds));
       });
     }
