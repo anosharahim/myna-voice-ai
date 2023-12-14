@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import axios from "axios";
 import Header from "./Header";
 
@@ -7,6 +8,7 @@ export default function SignUpForm() {
   const [password, setPassword] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [response, setResponse] = useState("");
+  const navigate = useNavigate();
 
   // Handling the name change
   const handleName = (e) => {
@@ -24,12 +26,13 @@ export default function SignUpForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/register/", {
+      const response = await axios.post("/signup/", {
         name,
         password,
       });
       setResponse(`/${response.data}`);
       setSubmitted(true);
+      navigate("/home");
     } catch (error) {
       console.error(error);
       setResponse("Error occurred while creating your account.");

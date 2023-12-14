@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('search-view/', TextSearchView.as_view(), name='search-view'),
     path('message-view/', MessageView.as_view(), name='message-view'),
-    path('sign-up/', sign_up, name='sign-up'),
+    path('signup/', sign_up, name='signup'),
     path("login/", login_handler, name="login"),
     path("logout/", logout_handler, name="logout"),
     path('check-is-authenticated/', check_is_authenticated,
