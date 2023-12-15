@@ -110,6 +110,7 @@ function HomePage({}) {
                   onClick={() => {
                     if (audio === audioVisibleInPlayer && isAudioPlaying) {
                       setIsAudioPlaying(false);
+                      // TODO: change play/pause icons accordingly
                     } else {
                       setAudioVisibleInPlayer(audio);
                       setIsAudioPlaying(true);

@@ -18,7 +18,7 @@ function App() {
   const checkAuthentication = () => {
     fetch("/check-is-authenticated/", {
       method: "GET",
-      credentials: "include", // This here
+      credentials: "include", 
     })
       .then((response) => {
         if (response.status === 200) {
