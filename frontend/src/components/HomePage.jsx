@@ -66,8 +66,7 @@ function HomePage({}) {
 
   return (
     <div>
-      {" "}
-      <Header />
+      <Header onHomePage={true}/>
       <div className="home-container">
         <div className="top-center-container">
           <div className="home-title"> Start Listening Now </div>
@@ -130,10 +129,10 @@ function HomePage({}) {
               <div>No audio files in the library yet.</div>
             )}
           </div>
-          <button onClick={handleLogOut} className="global-button">
+          {/* <button onClick={handleLogOut} className="global-button">
             {" "}
             Logout
-          </button>
+          </button> */}
         </div>
         {audioVisibleInPlayer && (
           <AudioPlayer
