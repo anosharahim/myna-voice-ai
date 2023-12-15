@@ -40,7 +40,7 @@ export default function SignInForm({ onAuthentication }) {
   };
   return (
     <div>
-      <Header />
+      <Header redirectToLandingPage={true}/>
       <div className="sign-container">
         <div className="sign-form">
           <div className="sign-title">Welcome Back</div>

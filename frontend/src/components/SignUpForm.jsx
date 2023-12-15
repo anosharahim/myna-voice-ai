@@ -41,7 +41,7 @@ export default function SignUpForm() {
 
   return (
     <div>
-      <Header />
+      <Header redirectToLandingPage={true}/>
       <div className="sign-container">
         <div className="sign-form">
           <div className="sign-title">Sign Up</div>
