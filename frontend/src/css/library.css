@@ -61,10 +61,20 @@
   padding-left: 15px;
 }
 
-.play-icon {
+.play-no-background {
   width: 12px;
   height: 12px;
-  background-image: url("../../public/play.png");
+  background-image: url("../../public/play-no-background.png");
+  background-size: cover;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.pause-no-background {
+  width: 12px;
+  height: 12px;
+  background-image: url("../../public/pause-no-background.png");
   background-size: cover;
   border: none;
   cursor: pointer;

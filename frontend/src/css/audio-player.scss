@@ -44,7 +44,7 @@
 
 .pause-button {
   @include base-button();
-  background-image: url("../../public/pause.png");
+  background-image: url("../../public/pause-button.png");
   width: 30px;
   height: 30px;
 }
