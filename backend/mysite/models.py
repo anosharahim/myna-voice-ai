@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class GlobalAudioLibrary(models.Model):  # Global audio library
+class AudioItem(models.Model): 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=120)
     audio_id = models.TextField(default=None)

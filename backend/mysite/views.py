@@ -7,7 +7,7 @@ from trafilatura.settings import use_config
 import torch
 from TTS.api import TTS
 from uuid import uuid4
-from .models import GlobalAudioLibrary 
+from .models import AudioItem
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -43,7 +43,7 @@ class TextSearchView(APIView):
         if 'url' not in request.data:
             return Response({'error': 'missing url in request data'}, status=400)
         url = request.data.get('url', '')
-        if not GlobalAudioLibrary.objects.filter(website_url=url).exists():
+        if not AudioItem.objects.filter(website_url=url).exists():
             html_content = trafilatura.fetch_url(url)
             extracted_text = trafilatura.extract(
                 html_content, output_format="text", config=newconfig)
@@ -57,12 +57,12 @@ class TextSearchView(APIView):
                 request, extracted_text[:1024], url, content_title)
 
         else:
-            audio_url = GlobalAudioLibrary.objects.get(
+            audio_url = AudioItem.objects.get(
                 website_url=url).audio_id
             audio_url = "static/" + audio_url + ".wav"
 
         # create and save embedding to model
-        # audio_instance = GlobalAudioLibrary.objects.get(website_url=url)
+        # audio_instance = AudioItem.objects.get(website_url=url)
         # if not audio_instance.embedding:
         #     audio_embedding = create_embedding(extracted_text)
         #     audio_instance.embedding = audio_embedding
@@ -76,7 +76,7 @@ class AudioLibraryView(APIView):
 
     def get(self, request):
         user = request.user
-        user_audios = GlobalAudioLibrary.objects.filter(
+        user_audios = AudioItem.objects.filter(
             user=user).values('title', 'audio_id')
         audio_library_data = [{'title': audio['title'],
                                'url': f"static/{audio['audio_id']}.wav"} for audio in user_audios]
@@ -89,13 +89,13 @@ def text_to_audio(request, content, url, title):
     user = request.user
     if not request.user.id:
         return Response({'error': "No user"}, status=403)
-    if not GlobalAudioLibrary.objects.filter(user=user, website_url=url).exists():
+    if not AudioItem.objects.filter(user=user, website_url=url).exists():
         device = "cuda" if torch.cuda.is_available() else "cpu"
 
         tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=False)
 
         file_id = uuid4()
-        GlobalAudioLibrary.objects.create(
+        AudioItem.objects.create(
             user=user, title=title, website_url=url, audio_id=file_id)
 
         file_path = f"/Users/anosha/audio-reader-ai/backend/uploads/{file_id}.wav"
@@ -110,7 +110,7 @@ def text_to_audio(request, content, url, title):
         audio = AudioSegment.from_file(file_path)
         duration_in_seconds = len(audio) / 1000
         if duration_in_seconds > 0:
-            return "static/" + GlobalAudioLibrary.objects.get(website_url=url, user=user).audio_id + ".wav"
+            return "static/" + AudioItem.objects.get(website_url=url, user=user).audio_id + ".wav"
         else:
             # Delete the file if duration is zero and handle accordingly
             os.remove(file_path)
