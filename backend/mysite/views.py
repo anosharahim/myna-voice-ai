@@ -7,7 +7,7 @@ from trafilatura.settings import use_config
 import torch
 from TTS.api import TTS
 from uuid import uuid4
-from .models import GlobalAudioLibrary, UserAudios
+from .models import GlobalAudioLibrary 
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -19,6 +19,8 @@ from config import OPENAI_GPT4_KEY
 import openai
 import requests
 from bs4 import BeautifulSoup
+from pydub import AudioSegment
+import os
 
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
@@ -35,7 +37,7 @@ class DisableCSRFMiddleware(object):
 
 
 class TextSearchView(APIView):
-    '''Recieves blog urls from frontend to generate audios and saves thems in DB.'''
+    '''Recieves blog urls from frontend, extracts text content, and passes to generate audio.'''
 
     def post(self, request):
         if 'url' not in request.data:
@@ -60,7 +62,7 @@ class TextSearchView(APIView):
             audio_url = "static/" + audio_url + ".wav"
 
         # create and save embedding to model
-        audio_instance = GlobalAudioLibrary.objects.get(website_url=url)
+        # audio_instance = GlobalAudioLibrary.objects.get(website_url=url)
         # if not audio_instance.embedding:
         #     audio_embedding = create_embedding(extracted_text)
         #     audio_instance.embedding = audio_embedding
@@ -81,44 +83,6 @@ class AudioLibraryView(APIView):
         return Response({'audio_library_data': audio_library_data}, status=200)
 
 
-class MessageView(APIView):
-    '''Receives speech-based user input queries from the client.'''
-
-    def post(self, request):
-        if 'query' in request.data:
-            query = request.data.get('query', '')
-            prompt = self.generatePrompt(query)
-            response = openai.ChatCompletion.create(
-                model='gpt-4',
-                messages=[{'role': 'user', 'content': prompt}],
-                temperature=0.3,
-                api_key=OPENAI_GPT4_KEY,
-            )
-            result = response.choices[0].message.content
-            # TODO: convert result into audio to be played by the frontend.
-            return Response({'result': result}, status=200)
-
-        else:
-            return Response({'error': "No user input detected"})
-
-    def generatePrompt(self, user_query):
-        '''Generates LLM prompt from user query.'''
-        # TODO: engineer the prompt for better output
-        prompt = user_query + "be concise."
-        return prompt
-
-
-# def create_embedding(text):
-#     '''Generates embeddings for audio text.'''
-#     openai.api_key = OPENAI_GPT4_KEY
-#     openai_response = openai.Embedding.create(
-#         input=text,
-#         model="text-embedding-ada-002"
-#     )
-#     embeddings = openai_response['data'][0]['embedding']
-#     return embeddings
-
-
 def text_to_audio(request, content, url, title):
     '''Converts extracted content into an audio file, and saves it to DB.'''
 
@@ -129,7 +93,6 @@ def text_to_audio(request, content, url, title):
         device = "cuda" if torch.cuda.is_available() else "cpu"
 
         tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=False)
-        print(tts)
 
         file_id = uuid4()
         GlobalAudioLibrary.objects.create(
@@ -143,8 +106,16 @@ def text_to_audio(request, content, url, title):
             language='en',
             split_sentences=True
             )
+        
+        audio = AudioSegment.from_file(file_path)
+        duration_in_seconds = len(audio) / 1000
+        if duration_in_seconds > 0:
+            return "static/" + GlobalAudioLibrary.objects.get(website_url=url, user=user).audio_id + ".wav"
+        else:
+            # Delete the file if duration is zero and handle accordingly
+            os.remove(file_path)
+            return Response({'error': "Audio duration is zero"}, status=400)
 
-    return "static/" + GlobalAudioLibrary.objects.get(website_url=url, user=user).audio_id + ".wav"
 
 
 def sign_up(request):
@@ -190,3 +161,41 @@ def logout_handler(request):
     '''Logs out user.'''
     logout(request)
     return JsonResponse({'success': True}, status=200)
+
+
+class MessageView(APIView):
+    '''Receives speech-based user input queries from the client.'''
+
+    def post(self, request):
+        if 'query' in request.data:
+            query = request.data.get('query', '')
+            prompt = self.generatePrompt(query)
+            response = openai.ChatCompletion.create(
+                model='gpt-4',
+                messages=[{'role': 'user', 'content': prompt}],
+                temperature=0.3,
+                api_key=OPENAI_GPT4_KEY,
+            )
+            result = response.choices[0].message.content
+            # TODO: convert result into audio to be played by the frontend.
+            return Response({'result': result}, status=200)
+
+        else:
+            return Response({'error': "No user input detected"})
+
+    def generatePrompt(self, user_query):
+        '''Generates LLM prompt from user query.'''
+        # TODO: engineer the prompt for better output
+        prompt = user_query + "be concise."
+        return prompt
+    
+
+# def create_embedding(text):
+#     '''Generates embeddings for audio text.'''
+#     openai.api_key = OPENAI_GPT4_KEY
+#     openai_response = openai.Embedding.create(
+#         input=text,
+#         model="text-embedding-ada-002"
+#     )
+#     embeddings = openai_response['data'][0]['embedding']
+#     return embeddings
