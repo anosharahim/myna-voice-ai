@@ -79,7 +79,7 @@ function HomePage({}) {
           {audioMessage && <div>{audioMessage}</div>}
         </div>
 
-        <div className="library-container" style={{ display: audioLibrary.length > 0 ? "block" : "none" }}>
+        <div className="library-container" >
           <div className="library-title">Your Library </div>
           <div className="table-container">
             <div className="table-head">
@@ -116,7 +116,7 @@ function HomePage({}) {
                 />
               ))
             ) : (
-              <div></div>
+              <div>No audio files in the library yet.</div>
             )}
           </div>
         </div>
