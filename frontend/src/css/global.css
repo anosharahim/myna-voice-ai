@@ -60,6 +60,12 @@ button:hover {
   padding-top: 5vh;
 }
 
+.site-name:hover {
+  /* padding-left: 8vh;
+  padding-top: 5vh; */
+  color: purple;
+}
+
 @media only screen and (max-width: 600px) {
   .site-name {
     text-align: center;
