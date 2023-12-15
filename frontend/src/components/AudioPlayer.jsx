@@ -1,11 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../css/audio-player.scss";
 
+// TODO: duplicate code from HomePage.jsx. Should extract into shared file.
+const formatTime = (timeInSeconds) => {
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = Math.floor(timeInSeconds % 60);
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+  return `${formattedMinutes}:${formattedSeconds}`;
+};
+
 const AudioPlayer = ({ audio, isAudioPlaying, setIsAudioPlaying }) => {
   const ref = useRef(null);
 
-  // states
-  const [duration, setDuration] = React.useState(0);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState("00:00");
 
   const togglePlay = () => {
     if (isAudioPlaying) {
@@ -18,13 +27,20 @@ const AudioPlayer = ({ audio, isAudioPlaying, setIsAudioPlaying }) => {
   useEffect(() => {
     if (isAudioPlaying) {
       ref?.current.play();
+      // checks audio duration progress while playing
+      const updateInterval = setInterval(() => {
+        console.log(Math.floor(ref?.current.currentTime));
+        setCurrentTime(formatTime(ref?.current.currentTime));
+      }, 10);
+      return () => clearInterval(updateInterval);
     } else {
       ref?.current.pause();
     }
-  }, [isAudioPlaying]);
+    
+    // Add duration here to fix bug -- Switching audio while
+    // playing another audio now correctly starts playing the new audio.
+  }, [isAudioPlaying, duration]);
 
-  // When you click on item 1, audio is that of 1
-  // when you click on item 2, audio 1 needs to be paused, and audio 2 needs to be played
 
   return (
     <div className="audio-pop-up">
@@ -32,9 +48,9 @@ const AudioPlayer = ({ audio, isAudioPlaying, setIsAudioPlaying }) => {
         ref={ref}
         src={audio.url}
         style={{ display: "none" }}
-        onDurationChange={(e) => setDuration(e.currentTarget.duration)}
-        // onPlaying={() => setIsAudioPlaying(true)}
-        // onPause={() => setIsAudioPlaying(false)}
+        onDurationChange={(e) =>
+          setDuration(Math.floor(e.currentTarget.duration))
+        }
       />
       {/* 1. When ref changes, get the duration and set it to component state */}
       {/* 2. Similarly for progress / start time */}
@@ -51,13 +67,19 @@ const AudioPlayer = ({ audio, isAudioPlaying, setIsAudioPlaying }) => {
           <button className="fastforward-button"></button>
         </div>
         <div className="slider-with-time">
-          <div className="start-time">00.00</div>
+          <div className="start-time">{currentTime}</div>
           <div className="slider">
-            <button className="slider-circle"></button>
-            <div className="slider-thin-line"></div>
-            <div className="slider-thick-line"></div>
+            <button
+              className="slider-circle"
+              style={{
+                left: `${(ref?.current?.currentTime / duration) * 100}%`,
+              }}
+            ></button>
+            <div className="slider-thin-line"></div>s
+            {/* TODO: Thick line with how much of audio was loaded */}
+            {/* <div className="slider-thick-line"></div> */}
           </div>
-          <div className="end-time">00.00</div>
+          <div className="end-time">{formatTime(duration)}</div>
         </div>
       </div>
       <div className="volume">
