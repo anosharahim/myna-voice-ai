@@ -53,16 +53,6 @@ function HomePage({}) {
     }
   };
 
-  const handleLogOut = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.get("/logout/");
-      // TODO check response status
-      navigate("/landing");
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <div>
