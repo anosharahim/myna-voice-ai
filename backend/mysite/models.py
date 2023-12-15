@@ -13,10 +13,3 @@ class GlobalAudioLibrary(models.Model):  # Global audio library
     def __str__(self):
         return self.title
 
-
-class UserAudios(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    audio = models.ForeignKey(GlobalAudioLibrary, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
