@@ -133,16 +133,21 @@ button:hover {
 }
 
 .sign-button {
-  background-color: #f5e960;
+  background-color: #fb85d3;
   color: black;
   padding: 14px 20px;
   margin: 8px 0;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
+  border: none;
   border-radius: 10px;
   cursor: pointer;
   width: 100%;
   opacity: 0.9;
   font-weight: 600;
+}
+
+.sign-button:hover {
+  background-color: #ff6ed0;
 }
 
 .sign-form {
