@@ -137,11 +137,11 @@ function LibraryItem({ index, title, url, onClick, isPlaying }) {
   const [totalDuration, setTotalDuration] = useState("00:00");
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  const handleHover = (index) => {
+  const handleIndexHover = (index) => {
     setHoveredIndex(index);
   };
 
-  const handleMouseLeave = () => {
+  const handleIndexMouseLeave = () => {
     setHoveredIndex(null);
   };
 
@@ -166,8 +166,8 @@ function LibraryItem({ index, title, url, onClick, isPlaying }) {
     <div
       className="library-item"
       onClick={onClick}
-      onMouseEnter={() => handleHover(index)}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => handleIndexHover(index)}
+      onMouseLeave={handleIndexMouseLeave}
     >
       <div key={index} className="lib-item">
         <div className="lib-item-index">
