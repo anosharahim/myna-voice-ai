@@ -92,8 +92,10 @@ function HomePage({}) {
               <div className="column-name" style={{ width: "700px" }}>
                 Title{" "}
               </div>
-              <div className="column-name"> Duration</div>
+              <div className="column-name" style={{ paddingRight: "100px" }} > Duration</div>
             </div>
+
+
             <div className="horizontal-line"></div>
           </div>
           <div className="library-items">
@@ -136,13 +138,16 @@ function LibraryItem({ index, title, url, onClick, isPlaying }) {
   const audioRef = useRef(null);
   const [totalDuration, setTotalDuration] = useState("00:00");
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [showDeleteIcon, setShowDeleteIcon] = useState(false);
 
   const handleIndexHover = (index) => {
     setHoveredIndex(index);
+    setShowDeleteIcon(true);
   };
 
   const handleIndexMouseLeave = () => {
     setHoveredIndex(null);
+    setShowDeleteIcon(false);
   };
 
   useEffect(() => {
@@ -171,11 +176,12 @@ function LibraryItem({ index, title, url, onClick, isPlaying }) {
     >
       <div key={index} className="lib-item">
         <div className="lib-item-index">
+
           {hoveredIndex === index ? (
             isPlaying ? (
-              <div className="pause-button"></div>
+              <div className="pause-no-background"></div>
             ) : (
-              <div className="play-icon"></div>
+              <div className="play-no-background"></div>
             )
           ) : (
             <div className="lib-index">{index + 1}.</div>
@@ -189,7 +195,12 @@ function LibraryItem({ index, title, url, onClick, isPlaying }) {
       >
         {title}
       </div>
-      <div style={{ fontWeight: "300", fontSize: "8" }}>{totalDuration}</div>
+      <div style={{ fontWeight: "300", fontSize: "8", paddingRight: "90px" }}>{totalDuration}</div>
+      {showDeleteIcon && (
+            <div className="delete-icon" onClick={() => console.log("handleDelete(index)")}>
+              <div className="delete-button"></div>
+            </div>
+          )}
       <div style={{ display: "none" }}>
         <audio ref={audioRef} src={url} />
       </div>
