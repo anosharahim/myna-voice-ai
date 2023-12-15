@@ -24,15 +24,15 @@ Yellow: f5e960
 
 .global-button {
   background-color: #fface4;
-  /* color: black; */
   padding: 14px 20px;
   margin: 8px 0;
-  /* border: 1px solid #000; */
   border-radius: 10px;
   cursor: pointer;
   border: none;
-  /* width: 20%; */
-  /* opacity: 0.9; */
+}
+
+.global-button:hover {
+  background-color: #ff6ed0;
 }
 
 .circular-button {
@@ -53,6 +53,8 @@ button:hover {
 .site-header {
   background-color: #edffec;
   font-weight: 500;
+  display: flex;
+  justify-content: space-between;
 }
 
 .site-name {
@@ -61,8 +63,19 @@ button:hover {
 }
 
 .site-name:hover {
-  /* padding-left: 8vh;
-  padding-top: 5vh; */
+  color: purple;
+}
+
+.logout-button{
+  padding-right: 8vh;
+  padding-top: 5vh;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+}
+
+.logout-button:hover {
   color: purple;
 }
 
