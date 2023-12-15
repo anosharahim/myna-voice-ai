@@ -29,7 +29,7 @@ function HomePage({}) {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
 
     if (url.trim() === "") {
       setAudioMessage("Please enter a valid URL.");
@@ -109,10 +109,10 @@ function HomePage({}) {
                   isPlaying={audio === audioVisibleInPlayer && isAudioPlaying}
                   onClick={() => {
                     if (audio === audioVisibleInPlayer && isAudioPlaying) {
-                      setIsAudioPlaying(false);
-                      // TODO: change play/pause icons accordingly
+                      setIsAudioPlaying(false); //pause
+            
                     } else {
-                      setAudioVisibleInPlayer(audio);
+                      setAudioVisibleInPlayer(audio); //play
                       setIsAudioPlaying(true);
                     }
                   }}
@@ -135,7 +135,10 @@ function HomePage({}) {
   );
 }
 
+// Displays single playable audio item, allows playing/pausing, calculates duration from audio,
+// handles respective UI 
 function LibraryItem({ index, title, url, onClick, isPlaying }) {
+  
   const audioRef = useRef(null);
   const [totalDuration, setTotalDuration] = useState("00:00");
   const [hoveredIndex, setHoveredIndex] = useState(null);

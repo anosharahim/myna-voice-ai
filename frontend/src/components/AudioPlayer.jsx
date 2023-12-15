@@ -29,9 +29,8 @@ const AudioPlayer = ({ audio, isAudioPlaying, setIsAudioPlaying }) => {
       ref?.current.play();
       // checks audio duration progress while playing
       const updateInterval = setInterval(() => {
-        console.log(Math.floor(ref?.current.currentTime));
         setCurrentTime(formatTime(ref?.current.currentTime));
-      }, 10);
+      }, 1000);
       return () => clearInterval(updateInterval);
     } else {
       ref?.current.pause();
