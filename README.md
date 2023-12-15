@@ -1,3 +1,10 @@
+## Next Steps
+- Add delete functionaliity to audio library 
+- [DONE] Show nothing if library has nothing instead of the library skeleton 
+- Make the audio player circle move with audio 
+- Update duration with audio 
+- show a loading button while waiting for response from backend
+
 # Context & Motivation
 
 Representative of my generation (Gen Z) is the infamously short attention span. Luckily, I went to a university that is built on the latest education science, which takes into account the shortening attention span in students. I did not have to listen to a single lecture in my four years of undergrad. Every class had 8-20 students engaged in active discussion, powered by an education software that kept track of student engagement, and it made me genuinely excited about learning.
