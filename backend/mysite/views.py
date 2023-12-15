@@ -61,10 +61,10 @@ class TextSearchView(APIView):
 
         # create and save embedding to model
         audio_instance = GlobalAudioLibrary.objects.get(website_url=url)
-        if not audio_instance.embedding:
-            audio_embedding = create_embedding(extracted_text)
-            audio_instance.embedding = audio_embedding
-            audio_instance.save()
+        # if not audio_instance.embedding:
+        #     audio_embedding = create_embedding(extracted_text)
+        #     audio_instance.embedding = audio_embedding
+        #     audio_instance.save()
 
         return Response({'audio_url': audio_url}, status=200)
 
@@ -108,15 +108,15 @@ class MessageView(APIView):
         return prompt
 
 
-def create_embedding(text):
-    '''Generates embeddings for audio text.'''
-    openai.api_key = OPENAI_GPT4_KEY
-    openai_response = openai.Embedding.create(
-        input=text,
-        model="text-embedding-ada-002"
-    )
-    embeddings = openai_response['data'][0]['embedding']
-    return embeddings
+# def create_embedding(text):
+#     '''Generates embeddings for audio text.'''
+#     openai.api_key = OPENAI_GPT4_KEY
+#     openai_response = openai.Embedding.create(
+#         input=text,
+#         model="text-embedding-ada-002"
+#     )
+#     embeddings = openai_response['data'][0]['embedding']
+#     return embeddings
 
 
 def text_to_audio(request, content, url, title):
