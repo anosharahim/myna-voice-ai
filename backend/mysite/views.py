@@ -126,19 +126,23 @@ def text_to_audio(request, content, url, title):
     if not request.user.id:
         return Response({'error': "No user"}, status=403)
     if not GlobalAudioLibrary.objects.filter(user=user, website_url=url).exists():
-
         device = "cuda" if torch.cuda.is_available() else "cpu"
 
-        model_name = TTS().list_models()[0]
-        tts = TTS(model_name).to(device)
+        tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=False)
+        print(tts)
 
         file_id = uuid4()
         GlobalAudioLibrary.objects.create(
             user=user, title=title, website_url=url, audio_id=file_id)
 
-        file_path = f"/Users/anosharahim/storyteller-ai/backend/uploads/{file_id}.wav"
+        file_path = f"/Users/anosha/audio-reader-ai/backend/uploads/{file_id}.wav"
         tts.tts_to_file(
-            text=content, speaker=tts.speakers[0], language=tts.languages[0], file_path=file_path)
+            text=content, 
+            speaker="Ana Florence",
+            file_path=file_path,
+            language='en',
+            split_sentences=True
+            )
 
     return "static/" + GlobalAudioLibrary.objects.get(website_url=url, user=user).audio_id + ".wav"
 
