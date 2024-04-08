@@ -4,7 +4,7 @@ from .models import AudioItem
 
 class AudioItemAdmin(admin.ModelAdmin):
     list_display = ('user', 'title', 'audio_id',
-                    'website_url', 'text_content', 'embedding')
+                    'website_url')
 
 
 admin.site.register(AudioItem, AudioItemAdmin)
