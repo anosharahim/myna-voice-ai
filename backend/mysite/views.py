@@ -15,12 +15,14 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import speech_recognition as sr
-from config import OPENAI_GPT4_KEY
+# from config import OPENAI_GPT4_KEY
 import openai
-import requests
+# import requests
 from bs4 import BeautifulSoup
 from pydub import AudioSegment
 import os
+from django.core.files.storage import default_storage
+from django.conf import settings
 
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
@@ -59,15 +61,7 @@ class TextSearchView(APIView):
         else:
             audio_url = AudioItem.objects.get(
                 website_url=url).audio_id
-            audio_url = "static/" + audio_url + ".wav"
-
-        # create and save embedding to model
-        # audio_instance = AudioItem.objects.get(website_url=url)
-        # if not audio_instance.embedding:
-        #     audio_embedding = create_embedding(extracted_text)
-        #     audio_instance.embedding = audio_embedding
-        #     audio_instance.save()
-
+            audio_url = f"{settings.STATIC_URL}{audio_url}.wav"
         return Response({'audio_url': audio_url}, status=200)
 
 
@@ -95,27 +89,40 @@ def text_to_audio(request, content, url, title):
         tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=False)
 
         file_id = uuid4()
-        AudioItem.objects.create(
+        audio_item = AudioItem.objects.create(
             user=user, title=title, website_url=url, audio_id=file_id)
-
-        file_path = f"/Users/anosha/audio-reader-ai/backend/uploads/{file_id}.wav"
-        tts.tts_to_file(
-            text=content, 
-            speaker="Ana Florence",
-            file_path=file_path,
-            language='en',
-            split_sentences=True
-            )
         
-        audio = AudioSegment.from_file(file_path)
-        duration_in_seconds = len(audio) / 1000
-        if duration_in_seconds > 0:
-            return "static/" + AudioItem.objects.get(website_url=url, user=user).audio_id + ".wav"
-        else:
-            # Delete the file if duration is zero and handle accordingly
-            os.remove(file_path)
-            return Response({'error': "Audio duration is zero"}, status=400)
+        file_name = f"{file_id}.wav"
+        file_path = f"uploads/{file_name}"
 
+        with default_storage.open(file_path, 'wb') as destination:
+            tts.tts_to_file(
+                text=content, 
+                speaker="Ana Florence",
+                file_path=destination,
+                language='en',
+                split_sentences=True
+            )
+
+        # Update audio file path in DB to S3 URL
+        audio_item.audio_file = file_path
+        audio_item.save()
+
+        # Return S3 URL
+        return default_storage.url(file_path)
+
+
+class AudioLibraryView(APIView):
+    '''Sends user's audio library data to client.'''
+
+    def get(self, request):
+        user = request.user
+        user_audios = AudioItem.objects.filter(
+            user=user).values('title', 'audio_id')
+        audio_library_data = [{'title': audio['title'],
+                               'url': f"{settings.STATIC_URL}{audio['audio_id']}.wav"} for audio in user_audios]
+
+        return Response({'audio_library_data': audio_library_data}, status=200)
 
 
 def sign_up(request):

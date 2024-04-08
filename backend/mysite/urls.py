@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import TextSearchView, MessageView, AudioLibraryView, sign_up, login_handler, check_is_authenticated, logout_handler
 from django.conf import settings
-from django.conf.urls.static import static
+# from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +31,4 @@ urlpatterns = [
          name='check-is-authenticated'),
     path('get-audio-library/', AudioLibraryView.as_view(),
          name='get-audio-library'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
