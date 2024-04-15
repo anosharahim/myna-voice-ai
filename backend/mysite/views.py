@@ -73,13 +73,9 @@ def text_to_audio(request, content, url, title):
         return Response({'error': "No user"}, status=403)
     if not AudioItem.objects.filter(user=user, website_url=url).exists():
         device = "cuda" if torch.cuda.is_available() else "cpu"
-
         tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=False)
 
         file_id = uuid4()
-        audio_item = AudioItem.objects.create(
-            user=user, title=title, website_url=url, audio_id=file_id)
-        
         file_name = f"{file_id}.wav"
         file_path = f"uploads/{file_name}"
 
@@ -92,7 +88,8 @@ def text_to_audio(request, content, url, title):
                 split_sentences=True
             )
 
-        # Update audio file path in DB to S3 URL
+        audio_item = AudioItem.objects.create(
+            user=user, title=title, website_url=url, audio_id=file_id)
         audio_item.audio_file = file_path
         audio_item.save()
 
