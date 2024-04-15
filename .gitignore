@@ -4,3 +4,4 @@ backend/uploads/
 __pycache__
 *.pyc
 .env
+backend/mysite/migrations/
