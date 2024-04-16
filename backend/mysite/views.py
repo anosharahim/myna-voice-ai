@@ -105,12 +105,15 @@ class AudioLibraryView(APIView):
 
     def get(self, request):
         user = request.user
-        user_audios = AudioItem.objects.filter(
-            user=user).values('title', 'audio_id')
-        audio_library_data = [{'title': audio['title'],
-                               'url': f"{settings.AWS_S3_URL_PROTOCOL}://{settings.AWS_S3_CUSTOM_DOMAIN}/uploads/{audio['audio_id']}.wav"} for audio in user_audios]
+        if user.is_authenticated:
+            user_audios = AudioItem.objects.filter(
+                user=user).values('title', 'audio_id')
+            audio_library_data = [{'title': audio['title'],
+                                'url': f"{settings.AWS_S3_URL_PROTOCOL}://{settings.AWS_S3_CUSTOM_DOMAIN}/uploads/{audio['audio_id']}.wav"} for audio in user_audios]
 
-        return Response({'audio_library_data': audio_library_data}, status=200)
+            return Response({'audio_library_data': audio_library_data}, status=200)
+        else: 
+            return Response({'error': 'User not authenticated'}, status=401)
 
 
 def sign_up(request):
