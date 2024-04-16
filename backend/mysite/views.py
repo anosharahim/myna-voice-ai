@@ -65,6 +65,18 @@ class TextSearchView(APIView):
         return Response({'audio_url': audio_url}, status=200)
 
 
+class AudioLibraryView(APIView):
+    '''Sends user's audio library data to client.'''
+
+    def get(self, request):
+        user = request.user
+        user_audios = AudioItem.objects.filter(
+            user=user).values('title', 'audio_id')
+        audio_library_data = [{'title': audio['title'],
+                               'url': f"static/{audio['audio_id']}.wav"} for audio in user_audios]
+        return Response({'audio_library_data': audio_library_data}, status=200)
+
+
 def text_to_audio(request, content, url, title):
     '''Converts extracted content into an audio file, and saves it to DB.'''
 
@@ -97,7 +109,7 @@ def text_to_audio(request, content, url, title):
         audio_item.save()
 
         # Return S3 URL
-        return f"{settings.AWS_S3_URL_PROTOCOL}://{settings.AWS_S3_CUSTOM_DOMAIN}/{file_path}"
+        return default_storage.url(file_path)
 
 
 class AudioLibraryView(APIView):
@@ -163,7 +175,7 @@ def logout_handler(request):
 
 class MessageView(APIView):
     '''Receives speech-based user input queries from the client.'''
-    OPENAI_GPT4_KEY = 0
+
     def post(self, request):
         if 'query' in request.data:
             query = request.data.get('query', '')
@@ -197,18 +209,3 @@ class MessageView(APIView):
 #     )
 #     embeddings = openai_response['data'][0]['embedding']
 #     return embeddings
-        # create and save embedding to model
-        # audio_instance = AudioItem.objects.get(website_url=url)
-        # if not audio_instance.embedding:
-        #     audio_embedding = create_embedding(extracted_text)
-        #     audio_instance.embedding = audio_embedding
-        #     audio_instance.save()
-    
-            # audio = AudioSegment.from_file(file_path)
-        # duration_in_seconds = len(audio) / 1000
-        # if duration_in_seconds > 0:
-        #     return "static/" + AudioItem.objects.get(website_url=url, user=user).audio_id + ".wav"
-        # else:
-        #     # Delete the file if duration is zero and handle accordingly
-        #     os.remove(file_path)
-        #     return Response({'error': "Audio duration is zero"}, status=400)
