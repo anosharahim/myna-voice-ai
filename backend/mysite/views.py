@@ -110,7 +110,7 @@ def text_to_audio(request, content, url, title):
         audio_item.save()
 
         # Return S3 URL
-        return default_storage.url(file_path)
+        return f"{settings.STATIC_URL}{file_path}"
 
 
 class AudioLibraryView(APIView):
@@ -122,7 +122,7 @@ class AudioLibraryView(APIView):
             user_audios = AudioItem.objects.filter(
                 user=user).values('title', 'audio_id')
             audio_library_data = [{'title': audio['title'],
-                                'url': f"{settings.AWS_S3_URL_PROTOCOL}://{settings.AWS_S3_CUSTOM_DOMAIN}/uploads/{audio['audio_id']}.wav"} for audio in user_audios]
+                                'url': f"{settings.STATIC_URL}uploads/{audio['audio_id']}.wav"} for audio in user_audios]
             return Response({'audio_library_data': audio_library_data}, status=200)
         else: 
             return Response({'error': 'User not authenticated'}, status=401)
