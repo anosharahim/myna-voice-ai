@@ -1,6 +1,7 @@
 frontend/node_modules
 *.sqlite3
 backend/uploads/
+backend/mysite/migrations/
 __pycache__
 *.pyc
 .env
