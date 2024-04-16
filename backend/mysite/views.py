@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
 import json
 import speech_recognition as sr
 # from config import OPENAI_GPT4_KEY
@@ -23,6 +23,7 @@ from pydub import AudioSegment
 import os
 from django.core.files.storage import default_storage
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
@@ -122,7 +123,6 @@ class AudioLibraryView(APIView):
                 user=user).values('title', 'audio_id')
             audio_library_data = [{'title': audio['title'],
                                 'url': f"{settings.AWS_S3_URL_PROTOCOL}://{settings.AWS_S3_CUSTOM_DOMAIN}/uploads/{audio['audio_id']}.wav"} for audio in user_audios]
-
             return Response({'audio_library_data': audio_library_data}, status=200)
         else: 
             return Response({'error': 'User not authenticated'}, status=401)
@@ -144,10 +144,11 @@ def sign_up(request):
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
+@login_required
 def check_is_authenticated(request):
     '''Checks if user is authenticated.'''
-    if request.user and request.user.id:
-        return JsonResponse({"the message": "success"}, status=200)
+    if request.user.is_authenticated:
+        return JsonResponse({"message": "successfully logged in"}, status=200)
     else:
         return JsonResponse({"error": "not logged in"}, status=403)
 
