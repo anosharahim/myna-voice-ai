@@ -28,6 +28,10 @@ function HomePage({}) {
     fetchAudioLibrary();
   }, []);
 
+  useEffect(() => {
+    console.log(audioLibrary);
+  }, [audioLibrary]);
+
   const handleSubmit = async (e) => {
     e.preventDefault(); 
 
