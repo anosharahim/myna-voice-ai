@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import TextSearchView, MessageView, AudioLibraryView, sign_up, login_handler, check_is_authenticated, logout_handler
+from .views import TextSearchView, MessageView, AudioLibraryView, sign_up, login_handler, check_is_authenticated, logout_handler, delete_audio
 from django.conf import settings
 # from django.conf.urls.static import static
 
@@ -24,11 +24,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('search-view/', TextSearchView.as_view(), name='search-view'),
     path('message-view/', MessageView.as_view(), name='message-view'),
+    path('get-audio-library/', AudioLibraryView.as_view(), name='get-audio-library'),
+
     path('signup/', sign_up, name='signup'),
     path("login/", login_handler, name="login"),
     path("logout/", logout_handler, name="logout"),
-    path('check-is-authenticated/', check_is_authenticated,
-         name='check-is-authenticated'),
-    path('get-audio-library/', AudioLibraryView.as_view(),
-         name='get-audio-library'),
+    path('check-is-authenticated/', check_is_authenticated, name='check-is-authenticated'),
+    path('delete-audio/', delete_audio, name='delete-audio'),
 ]

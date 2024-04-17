@@ -24,6 +24,8 @@ import os
 from django.core.files.storage import default_storage
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
+import boto3
 
 newconfig = use_config()
 newconfig.set("DEFAULT", "EXTRACTION_TIMEOUT", "0")
@@ -86,13 +88,9 @@ def text_to_audio(request, content, url, title):
         return Response({'error': "No user"}, status=403)
     if not AudioItem.objects.filter(user=user, website_url=url).exists():
         device = "cuda" if torch.cuda.is_available() else "cpu"
-
         tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=False)
 
         file_id = uuid4()
-        audio_item = AudioItem.objects.create(
-            user=user, title=title, website_url=url, audio_id=file_id)
-        
         file_name = f"{file_id}.wav"
         file_path = f"uploads/{file_name}"
 
@@ -105,7 +103,7 @@ def text_to_audio(request, content, url, title):
                 split_sentences=True
             )
 
-        # Update audio file path in DB to S3 URL
+        audio_item = AudioItem.objects.create(user=user, title=title, website_url=url, audio_id=file_id)
         audio_item.audio_file = file_path
         audio_item.save()
 
@@ -126,6 +124,15 @@ class AudioLibraryView(APIView):
             return Response({'audio_library_data': audio_library_data}, status=200)
         else: 
             return Response({'error': 'User not authenticated'}, status=401)
+
+@require_http_methods(["DELETE"])       
+def delete_audio(request):
+    try:
+        audio_url = request.GET.get('audio_to_delete')
+        return JsonResponse({'message': 'Audio deleted successfully'})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+    
 
 
 def sign_up(request):
