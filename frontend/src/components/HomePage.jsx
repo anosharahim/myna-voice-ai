@@ -5,6 +5,7 @@ import AudioPlayer from "./AudioPlayer";
 import Header from "./Header";
 import "../css/library.css";
 
+
 function HomePage({}) {
   const [url, setUrl] = useState("");
   const [audio, setAudio] = useState("");
@@ -33,7 +34,7 @@ function HomePage({}) {
   }, [audioLibrary]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (url.trim() === "") {
       setAudioMessage("Please enter a valid URL.");
@@ -57,10 +58,23 @@ function HomePage({}) {
     }
   };
 
+  const handleDeleteAudio = async (id) => {
+    console.log("to be deleted", id);
+    try {
+      await axios.delete(`/delete-audio/`, {
+        params: { audio_to_delete: id },
+      });
+      // Remove the deleted audio from the audioLibrary state
+      setAudioLibrary(audioLibrary.filter((audio) => audio.audio_id !== id));
+      console.log("Audio deleted successfully");
+    } catch (error) {
+      console.error("Error deleting audio:", error);
+    }
+  };
 
   return (
     <div>
-      <Header onHomePage={true}/>
+      <Header onHomePage={true} />
       <div className="home-container">
         <div className="top-center-container">
           <div className="home-title"> Start Listening Now </div>
@@ -83,7 +97,7 @@ function HomePage({}) {
           {audioMessage && <div>{audioMessage}</div>}
         </div>
 
-        <div className="library-container" >
+        <div className="library-container">
           <div className="library-title">Your Library </div>
           <div className="table-container">
             <div className="table-head">
@@ -96,9 +110,11 @@ function HomePage({}) {
               <div className="column-name" style={{ width: "700px" }}>
                 Title{" "}
               </div>
-              <div className="column-name" style={{ paddingRight: "100px" }} > Duration</div>
+              <div className="column-name" style={{ paddingRight: "100px" }}>
+                {" "}
+                Duration
+              </div>
             </div>
-
 
             <div className="horizontal-line"></div>
           </div>
@@ -106,6 +122,7 @@ function HomePage({}) {
             {audioLibrary.length > 0 ? (
               audioLibrary.map((audio, index) => (
                 <LibraryItem
+                  id={audio.audio_id}
                   key={audio.url}
                   index={index}
                   title={audio.title}
@@ -114,12 +131,12 @@ function HomePage({}) {
                   onClick={() => {
                     if (audio === audioVisibleInPlayer && isAudioPlaying) {
                       setIsAudioPlaying(false); //pause
-            
                     } else {
                       setAudioVisibleInPlayer(audio); //play
                       setIsAudioPlaying(true);
                     }
                   }}
+                  onDelete={handleDeleteAudio}
                 />
               ))
             ) : (
@@ -140,9 +157,8 @@ function HomePage({}) {
 }
 
 // Displays single playable audio item, allows playing/pausing, calculates duration from audio,
-// handles respective UI 
-function LibraryItem({ index, title, url, onClick, isPlaying }) {
-  
+// handles respective UI
+function LibraryItem({ id, index, title, url, onClick, isPlaying, onDelete }) {
   const audioRef = useRef(null);
   const [totalDuration, setTotalDuration] = useState("00:00");
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -175,6 +191,11 @@ function LibraryItem({ index, title, url, onClick, isPlaying }) {
     return `${formattedMinutes}:${formattedSeconds}`;
   };
 
+  const handleDeleteClick = (e) => {
+    e.stopPropagation();
+    onDelete(id);
+  };
+
   return (
     <div
       className="library-item"
@@ -184,7 +205,6 @@ function LibraryItem({ index, title, url, onClick, isPlaying }) {
     >
       <div key={index} className="lib-item">
         <div className="lib-item-index">
-
           {hoveredIndex === index ? (
             isPlaying ? (
               <div className="pause-no-background"></div>
@@ -203,12 +223,14 @@ function LibraryItem({ index, title, url, onClick, isPlaying }) {
       >
         {title}
       </div>
-      <div style={{ fontWeight: "300", fontSize: "8", paddingRight: "90px" }}>{totalDuration}</div>
+      <div style={{ fontWeight: "300", fontSize: "8", paddingRight: "90px" }}>
+        {totalDuration}
+      </div>
       {showDeleteIcon && (
-            <div className="delete-icon" onClick={() => console.log("handleDelete(index)")}>
-              <div className="delete-button"></div>
-            </div>
-          )}
+        <div className="delete-icon" onClick={handleDeleteClick}>
+          <div className="delete-button"></div>
+        </div>
+      )}
       <div style={{ display: "none" }}>
         <audio ref={audioRef} src={url} />
       </div>
