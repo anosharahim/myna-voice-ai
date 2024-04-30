@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  xtts-v2:
+    build: .
+    environment:
+      - MODEL_NAME=xtts_v2
+      - LANGUAGE=en
+      - GPU=True  
+      - SAMPLE_TEXT="Default text"  
+    volumes:
+      - ./model:/app/tts_models 
+      - ./output:/output  
+    ports:
+      - "5002:5002" 
+    command: 
+      python app.py
+
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0' 
+          memory: 5G        
